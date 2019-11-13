@@ -1,0 +1,351 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>    <meta charset="utf-8">
+    <!--<link rel="stylesheet" href="buildsheet.css">-->
+    <title>Build sheet</title>
+	<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+	<link href="{% static 'css/toastr.min.css' %}" rel="stylesheet" id="bootstrap-css">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" id="bootstrap-css">
+    <link href="{% static 'css/buildsheet.css' %}" rel="stylesheet" id="bootstrap-css">
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/ui/common.js' %}"></script>
+	<script src="{% static 'js/ui/dataCompletion.js' %}"></script>
+	<script src="{% static 'js/toastr.min.js' %}"></script>
+  <script src="{% static 'js/ui/buildsheet.js' %}"></script>
+  </head>
+  <body>
+    <div>
+      <h2 class="mt-5">  Buildsheet Generation System</h2>
+    <nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 1px solid grey;">
+     <!--  <a class="navbar-brand" href="#">Navbar</a> -->
+       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item ">
+            <a class="nav-link" href="#" onClick='buildsheetPage()'>Buildsheets </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="#" onClick='createPage()'>Create <span class="sr-only">(current)</span></a>
+          </li>
+           
+          <li class="nav-item active">
+                <a class="nav-link" href="#" onClick='datacompletion()'>DCR</a>
+            </li>
+          <li class="nav-item ">
+                <a class="nav-link" href="#" onClick='unique()'>Unique Entity</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">User Guide</a>
+          </li>
+        </ul>
+        <a class="form-inline my-2 my-lg-0 btn" href="#" style="color: white;">
+          <span class="glyphicon glyphicon-log-out"></span>
+        </a>
+      </div>
+    </nav>
+    </div>
+  <div class="container-fluid">
+  
+<BR><BR>
+<P align='center'>DATA COMPLETION REPORT </P>
+  {% csrf_token %}
+
+  <br>
+  <br>
+
+<div class="form-group  pr-3" align='center'><br>
+  {% csrf_token %}
+    <button type="button" name="ATT ALL data" id='atalldata'  style="width:200px;" class="btn btn-outline-success" background_typename>ATTRIBUTION REPORT</button>
+  </div>
+
+<div class='form-container' id='attribution' >
+    <form class="form-group"  >
+      {% csrf_token %}
+    <h5 style="margin-left:330px;margin-top:20px">Or Payerwise Attribution Report</h5>
+    <table align='center' cellspacing="50px" cellpadding="9px" class="w-50">
+        <tr>
+        <td>
+
+        <div class="form-group  pr-3">
+      <label for="">Select ACO <span class="text-danger">*</span></label><br>
+      <!--<input type="text" name="" placeholder="Value" class="form-control">-->
+       <select class="form-control" id="aco_nm2" required> 
+        <option value="">Select ACO</option>
+        {% for table in aco_nm %}
+
+    <option value="{{table}}">{{table}}</option>
+    {% endfor %}
+  </select>
+  </div>
+        </td>
+        <td>
+
+        <div class="form-group  pr-3">
+      <label for="">Select Payer <span class="text-danger">*</span></label><br>
+      <!--<input type="text" name="" placeholder="Value" class="form-control">-->
+       <select class="form-control" id="payerAt" required>
+       <option value="">Select Payer</option>         
+  </select>
+  </div>
+        </td>
+        <td>
+
+        <div class="form-group  pr-3">
+      <label for="">From Year<span class="text-danger">*</span></label><br>
+      <!--<input type="text" name="" placeholder="Value" class="form-control">-->
+       <select class="form-control" id="fromdtAt" required> 
+        <option value="">Select Year</option>
+        </select>
+  </div>
+        </td>
+        <td>
+
+        <div class="form-group  pr-3">
+      <label for="">To Year<span class="text-danger">*</span></label><br>
+      <!--<input type="text" name="" placeholder="Value" class="form-control">-->
+       <select class="form-control" id="todateAt" required> 
+        <option value="">Select Year</option>
+        </select>
+  </div>
+        </td>
+        <td>
+       <div class="form-group  pr-3"><br>
+       <button type="button" name="attributionByPayer" id='attributionByPayer' style="width:150px;"  class="btn btn-outline-primary" background_typename>Report </button>
+  </div>
+        </td>
+</tr>
+  </table>
+</form>
+</div>
+
+<br><br>
+<div class="form-group  pr-3" align='center'><br>
+  {% csrf_token %}
+    <button type="button" name="CLINICAL ALL data" id='clalldata'  style="width:200px;" class="btn btn-outline-success" background_typename>CLINICAL REPORT</button>
+  </div>
+
+<div class='form-container' id='clinical' >
+    <form class="form-group"  >
+      {% csrf_token %}
+    <h5 style="margin-left:330px;margin-top:20px">Or Facility-wise Clinical Report</h5>
+    <table align='center' cellspacing="50px" cellpadding="9px" class="w-50">
+        <tr>
+        <td>
+
+        <div class="form-group pr">
+      <label for="">Select ACO<span class="text-danger">*</span></label><br>
+      <!--<input type="text" name="" placeholder="Value" class="form-control">-->
+       <select class="form-control" id="aco_nm3" required> 
+        <option value="">Select ACO</option>
+        {% for table in aco_nm %}
+
+    <option value="{{table}}">{{table}}</option>
+    {% endfor %}
+  </select>
+  </div>
+        </td>
+        <td>
+
+        <div class="form-group  pr">
+      <label for="">Select Facility<span class="text-danger">*</span></label><br>
+      <!--<input type="text" name="" placeholder="Value" class="form-control">-->
+       <select class="form-control" id="payercl" required>
+       <option value="">Select Facility</option>         
+  </select>
+  </div>
+        </td>
+
+        <td>
+
+        <div class="form-group  pr">
+      <label for="">Select Category<span class="text-danger">*</span></label><br>
+      <!--<input type="text" name="" placeholder="Value" class="form-control">-->
+       <select class="form-control" id="clcategory" required>
+       <option value="">Select Category</option>         
+  </select>
+  </div>
+        </td>
+</tr><tr>
+        <td>
+
+        <div class="form-group  pr">
+      <label for="">From Date (ingdt)<span class="text-danger">*</span></label><br>
+      <!--<input type="text" name="" placeholder="Value" class="form-control">-->
+       <input type="date" name="clfromdate"  id="fromdtcl" >
+       
+    </div>
+        </td>
+        <td>
+
+        <div class="form-group  pr">
+      <label for="">To Date (ingdt)<span class="text-danger">*</span></label><br>
+      <!--<input type="text" name="" placeholder="Value" class="form-control">-->
+        <input type="date" name="cltodate" id="todtcl" >
+  </div>
+        </td>
+      <td>
+       <div class="form-group  pr-3"><br>
+       <button type="button" name="attributionByPayer" id='clinicalByPayer' style="width:150px;"  class="btn btn-outline-primary" background_typename>Report </button>
+  </div>
+        </td>
+</tr>
+  </table>
+</form>
+</div>
+
+<br><br>
+
+<div class='form-container' id='catclinical' >
+    <form class="form-group"  >
+      {% csrf_token %}
+    <h5 style="margin-left:330px;margin-top:20px">Or Category-wise Clinical Report</h5>
+    <table align='center' cellspacing="50px" cellpadding="9px" class="w-50">
+        <tr>
+        <td>
+
+        <div class="form-group pr">
+      <label for="">Select ACO<span class="text-danger">*</span></label><br>
+      <!--<input type="text" name="" placeholder="Value" class="form-control">-->
+       <select class="form-control" id="aco_nm4" required> 
+        <option value="">Select ACO</option>
+        {% for table in aco_nm %}
+
+    <option value="{{table}}">{{table}}</option>
+    {% endfor %}
+  </select>
+  </div>
+        </td>
+        <td>
+
+        <div class="form-group  pr">
+      <label for="">Select Facility<span class="text-danger">*</span></label><br>
+      <!--<input type="text" name="" placeholder="Value" class="form-control">-->
+       <select class="form-control" id="payercatcl" required>
+       <option value="">Select Facility</option>         
+  </select>
+  </div>
+        </td>
+
+        <td>
+
+        <div class="form-group  pr">
+      <label for="">Select Category<span class="text-danger">*</span></label><br>
+      <!--<input type="text" name="" placeholder="Value" class="form-control">-->
+       <select class="form-control" id="clcategory1" required>
+       <option value="">Select Category</option>         
+  </select>
+  </div>
+        </td>
+</tr><tr>
+    <td>
+              <div class="form-group  pr-3">
+                <label for="">Date type <span class="text-danger">*</span></label><br>
+                <input type="text" name="date_type" placeholder="Date_Type" disabled="true" id='date_type' class="form-control-sm">
+              </div>
+            </td>
+        <td>
+
+        <div class="form-group  pr">
+      <label for="">From Date<span class="text-danger">*</span></label><br>
+      <!--<input type="text" name="" placeholder="Value" class="form-control">-->
+       <input type="date" name="catclfromdate"  id="fromdtcatcl" >
+       
+    </div>
+        </td>
+        <td>
+
+        <div class="form-group  pr">
+      <label for="">To Date<span class="text-danger">*</span></label><br>
+      <!--<input type="text" name="" placeholder="Value" class="form-control">-->
+        <input type="date" name="catcltodate" id="todtcatcl" >
+  </div>
+        </td>
+      <td>
+       <div class="form-group  pr-3"><br>
+       <button type="button" name="categoryclinicalreport" id='categoryclinical' style="width:150px;"  class="btn btn-outline-primary" background_typename>Report </button>
+  </div>
+        </td>
+</tr>
+  </table>
+</form>
+</div>
+
+<br><br>
+<div class="form-group  pr-3" align='center'>
+  {% csrf_token %}
+    <button type="button" name="ALL data" id='alldata'  style="width:200px" class="btn btn-outline-success" background_typename>CLAIMS REPORT</button>
+  </div>
+
+<div class='form-container' id='claims' >
+    <form class="form-group"  >
+      {% csrf_token %}
+    <h5 style="margin-left:330px;margin-top:20px">Or Payerwise Claims Report</h5>
+    <table align='center' cellspacing="50px" cellpadding="9px" class="w-50">
+        <tr>
+        <td>
+
+        <div class="form-group pr-2">
+      <label for="">Select ACO <span class="text-danger">*</span></label><br>
+      <!--<input type="text" name="" placeholder="Value" class="form-control">-->
+       <select class="form-control" id="aco_nm1" required> 
+        <option value="">Select ACO</option>
+        {% for table in aco_nm %}
+
+    <option value="{{table}}">{{table}}</option>
+    {% endfor %}
+  </select>
+  </div>
+        </td>
+        <td>
+
+        <div class="form-group  pr">
+      <label for="">Select Payer <span class="text-danger">*</span></label><br>
+      <!--<input type="text" name="" placeholder="Value" class="form-control">-->
+       <select class="form-control" id="payer"required>
+       <option value="">Select Payer</option>         
+  </select>
+  </div>
+        </td>
+        <td>
+
+        <div class="form-group  pr">
+      <label for="">From Year<span class="text-danger">*</span></label><br>
+      <!--<input type="text" name="" placeholder="Value" class="form-control">-->
+       <select class="form-control" id="fromdt" required> 
+        <option value="">Select Year</option>
+        </select>
+  </div>
+        </td>
+        <td>
+
+        <div class="form-group  pr">
+      <label for="">To Year<span class="text-danger">*</span></label><br>
+      <!--<input type="text" name="" placeholder="Value" class="form-control">-->
+       <select class="form-control" id="todate" required> 
+        <option value="">Select Year</option>
+        </select>
+  </div>
+        </td>
+     
+        <td >
+       <div class="form-group  pr-2" align='center'><br>
+       <button type="button" name="claimsbypayer" id='claimsbypayer' style="width:150px;"  class="btn btn-outline-primary" background_typename>Report</button>
+  </div>
+        </td>
+</tr>
+  </table>
+</form>
+</div>
+<br><br>
+
+</li>
+</ul>
+</div>
+</nav>
+</div>
+
+</body>
+</html>

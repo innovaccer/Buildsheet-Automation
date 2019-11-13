@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Build sheet</title>
+        <link href="{% static 'css/predefined/toastr.min.css' %}" rel="stylesheet" id="bootstrap-css">
+        <link href="{% static 'css/predefined/bootstrap.min.css' %}" rel="stylesheet" id="bootstrap-css">
+        <link href="{% static 'css/ui/common.css' %}" rel="stylesheet" id="bootstrap-css">
+        <link href="{% static 'css/predefined/jm.spinner.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'css/predefined/all.css' %}" rel="stylesheet" type="text/css">
+        <script src="{% static 'js/predefined/jquery-3.4.1.min.js' %}"></script>
+        <script src="{% static 'js/predefined/toastr.min.js' %}"></script>
+        <script src="{% static 'js/predefined/popper.min.js' %}"></script>
+        <script src="{% static 'js/predefined/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/ui/jm.spinner.js' %}"></script> 
+        <script src="{% static 'js/ui/common.js' %}"></script>
+    </head>
+    <body>
+        <div>
+        <!-- <h2 class="mt-5">  Buildsheet Generation System</h2> -->
+        <nav class="navbar navbar-expand-lg navbar-light" style="">
+            <!--  <a class="navbar-brand" href="#">Navbar</a> -->
+            <img src="{% static 'images/logo.png' %}"/>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a id='buildsheet-link' class="nav-link" href="#" onClick='buildsheetPage()'>Buildsheets <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a id='valuelever-link' class="nav-link" href="#" onClick='leverPage()'>Value Lever </a>
+                    </li>
+                    <!--<li class="nav-item ">
+                        <a class="nav-link" onClick='auditPage()' href="#">Audit Report</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="#" onClick='datacompletion()'>DCR</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="#" onClick='unique()'>Unique Entity</a>
+                    </li>-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">User Guide</a>
+                    </li>
+                </ul>
+                <a class="form-inline my-2 my-lg-0 btn" href="#">
+                    <span class="glyphicon glyphicon-log-out"></span>
+                </a>
+            </div>
+        </nav>
+    </div>
+{% block content %}
+{% endblock %}            
+  </body>
+</html>

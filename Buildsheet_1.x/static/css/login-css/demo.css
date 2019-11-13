@@ -1,0 +1,111 @@
+@font-face {
+    font-family: 'Roboto-Regular';
+    src: url('fonts/Roboto-Regular.ttf');
+
+}
+/* CSS reset */
+body,div,dl,dt,dd,ul,ol,li,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {
+	margin:0;
+	padding:0;
+  font-family: 'Roboto-Regular';
+}
+
+h1 {
+	margin:0;
+	padding:0;
+  color:#E31C79;
+  font-family: 'Roboto-Regular';
+  font-style: italic;
+  font-size: x-large;
+  padding: 20px 15px;
+}
+html,body {
+	margin:0;
+	padding:0;
+	height: 100%;
+}
+table {
+	border-collapse:collapse;
+	border-spacing:0;
+}
+fieldset,img {
+	border:0;
+}
+
+ol,ul {
+	list-style:none;
+}
+caption,th {
+	text-align:left;
+}
+
+q:before,q:after {
+	content:'';
+}
+abbr,acronym { border:0;
+}
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+/* General Demo Style */
+body{
+	font-family: 'Roboto-Regular';
+	background: #f4f1f2 ;
+	font-size: 15px;
+	color: #FEFBF5;
+	overflow-y: scroll;
+}
+a{
+	color: #333;
+	text-decoration: none;
+}
+.container{
+	width: 100%;
+	height: 100%;
+	position: relative;
+	text-align: center;
+}
+.clr{
+	clear: both;
+}
+.container > header{
+	padding: 100px 30px 10px 30px;
+	margin: 0px 20px 10px 20px;
+	position: relative;
+	display: block;
+    text-align: center;
+}
+.container > header h1{
+	font-family: 'Roboto-Regular';
+  font-style:italic;
+	font-size: 35px;
+	line-height: 35px;
+	position: relative;
+	color: #E31C79;
+    padding: 0px 0px 5px 0px;
+}
+.container > header h1 span{
+	color: #E31C79;
+}
+.container > header h2{
+	font-size: 16px;
+	color: #2d6277;
+}
+/* Header Style */
+.innovaccerlogo{
+	line-height: 45px;
+	font-size: 11px;
+	background: rgba(255, 255, 255, 0.4);
+	text-transform: uppercase;
+
+}
+
+.innovaccerlogo span.right{
+	float: right;
+  border-top : 10px;
+}
+.innovaccerlogo span.left{
+	float: left;
+  border-top : 10px;
+}

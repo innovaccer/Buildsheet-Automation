@@ -1,0 +1,280 @@
+body {
+    background: #fff5f5;
+    font-family: Calibri;
+    font-size: large;
+    font-weight: 300;
+    line-height: 17px;
+  }
+.row{margin-bottom: 15px;
+    margin-top: 15px;}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: #E31C79;
+  color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+
+.modal-footer {
+  padding: 2px 16px;
+ 
+  color: white;
+}
+.modal-backdrop {
+	z-index:-1;
+}
+
+.modal-backdrop.show {
+    opacity: 0;
+}
+
+Edit in JSFiddle
+Result
+HTML
+CSS
+JavaScript
+Resources
+/*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+.table-fixed tbody {
+    height: 300px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.table-fixed thead,
+.table-fixed tbody,
+.table-fixed tr,
+.table-fixed td,
+.table-fixed th {
+    display: block;
+}
+
+.table-fixed tbody td,
+.table-fixed tbody th,
+.table-fixed thead > tr > th {
+    float: left;
+    position: relative;
+
+    &::after {
+        content: '';
+        clear: both;
+        display: block;
+    }
+}
+
+/*
+*
+* ==========================================
+* FOR DEMO PURPOSES
+* ==========================================
+*
+*/
+
+/*body {
+    background: #74ebd5;
+    background: -webkit-linear-gradient(to right, #74ebd5, #ACB6E5);
+    background: linear-gradient(to right, #74ebd5, #ACB6E5);
+    min-height: 100vh;
+
+}*/
+
+.form-control-sm {
+  width: inherit;
+  color:black;
+  background: #f7eeee;
+}
+.form-control-custom {
+  width: 170px;
+  color:black;
+  background: #f7eeee;
+}
+
+.navbar {
+    background: #E31C79;
+    height: 40px;
+}
+
+.navbar-light .navbar-nav .nav-link  {
+  color: white;
+}
+
+.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+  text-decoration: underline;
+  color: white;
+}
+
+.mt-5, .my-5 {
+    margin-top: 2rem!important;
+    margin-left: 23px;
+    margin-bottom: 1rem!important;
+}
+
+select {
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: black;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    -webkit-appearance: menulist;
+    box-sizing: border-box;
+    align-items: center;
+    white-space: pre;
+    -webkit-rtl-ordering: logical;
+    background-color: rgb(248, 248, 248);
+    cursor: default;
+    margin: 0em;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(166, 166, 166);
+    border-image: initial;
+}
+
+input {
+
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: black;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    box-sizing: border-box;
+    align-items: center;
+    white-space: pre;
+    -webkit-rtl-ordering: logical;
+    background-color: rgb(248, 248, 248);
+    cursor: default;
+    margin: 0em;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(166, 166, 166);
+    border-image: initial;
+
+}
+
+.custom-textarea{
+    padding: 20px;
+    background: #f7eeee;
+}
+.btn-outline-success {
+    color: #fff;
+    background-color: #b3b2b2;
+    border-color: #b3b2b2;
+
+}
+
+.btn-outline-danger {
+    color: #fff;
+    background-color: #b3b2b2;
+    border-color: #b3b2b2;;
+
+}
+/*.btn-outline-primary {
+    color: #fff;
+    background-color: #8586a2;
+    border-color: #8586a2;
+}*/
+.btn-outline-warning {
+    color: #fff;
+    background-color: #b3b2b2;
+    border-color: #b3b2b2;
+   
+}
+.btn-outline-secondary {
+   color: #fff;
+    background-color: #b3b2b2;
+    border-color: #b3b2b2;
+    
+}
+
+.btn-outline-primary {
+    color: #fff;
+    background-color: #b3b2b2;
+    border-color: #b3b2b2;
+}
+.list-group-item {
+    margin-top: 40px;
+}
+.badge-pill {
+    float: right;
+    background: #f4eaef;
+    top: 2px;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+card-header {
+    background-color: #f4eaef;
+}

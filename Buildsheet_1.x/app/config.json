@@ -1,0 +1,18 @@
+{
+  "redshift" : {
+	"host":"",
+	"user":"",
+	"password":"",
+	"port":"5439",
+	"database":""
+
+},
+  "mysql" : {
+	"host":"",
+	"user":"root",
+	"password":"root",
+	"port":"3306",
+	"database":"buildsheet_project"
+
+}
+}

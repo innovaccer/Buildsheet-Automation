@@ -1,0 +1,605 @@
+{% extends "buildsheet/base.html" %}
+{% block content %}
+{% load static %}
+<style type="text/css">
+  .custom-btn{
+    font-size: 11px;
+    /*width: 180px;*/
+    height: 60px;
+    /*text-align: left;*/
+  }
+  .vl-bagde{
+    background: #e2e4e6;
+    padding: 12px 12px;
+    border-radius: 50%;
+    color: black;
+
+  }
+  .svg-link{
+    width: 75px;
+    margin: 0px;
+    padding: 0;
+    background: #545454;
+    height: 2px;
+  }
+  .vv-1{
+
+    margin: 0 0 0 15px;
+  }
+</style>
+<script type="text/javascript">
+  $('#buildsheet-link').parent().removeClass('active');
+  $('#valuelever-link').parent().addClass('active');
+</script>
+<div class='header'>
+    <div class='row'>
+      <div class='col-xl-6'>
+        <!-- <span class="buildsheet-count text-weight-bold display-inline-block badge-count">{{buildsheets|length}}</span> -->
+        <h4 class='title'>Value Levers</h4>
+      </div>
+      <!-- <div class='col-xl-6'>
+        <button class="float-right sc-bwzfXH Rpxft" style="font-weight: 400;" data-toggle="modal" data-target="#NewBuildsheetModal">New Buildsheet</button>
+      </div> -->
+    </div>
+</div>
+
+<div class="container-fluid">      
+   <!--  <div class="cvRkBw">
+        <div class="TsPzA">
+          {% for buildsheet in buildsheets %}
+            <div class="sc-kIPQKe kZRLjS">
+                <div class="sc-RefOD kxMCsa" title={{buildsheet.0}}>
+                  <a class="text-dark buildsheet-link" href='#' buildsheet_id={{buildsheet.2}} style="font-size: 18px; text-transform: capitalize;">{{buildsheet.0}}</a>
+                  <div class="display-flex">
+                    <div class="sc-ibxdXY fbXAnU"><span class="text-gray">{{buildsheet.10}} Category</span></div>
+                  </div>
+                </div>
+                <div class="sc-ibxdXY DdMcx">
+                  <span>
+                    <span class="text-gray" style="display: inline-block; vertical-align: middle;">{{buildsheet.9}}</span>
+                    <span class="glyphicon glyphicon glyphicon-trash"></span>
+                  </span>
+                </div>
+            </div>
+          {% endfor %}
+        </div>
+    </div>  -->
+ 
+    <div class="row">
+      <div class="vv-1">
+        <button type="button" class="btn  btn-primary custom-btn" id='' style="background: #388bbb;text-align: center;">Cost and Utilization</button>
+        <svg class="svg-link"><path stroke="black" d="M5 40 l215 0"></path></svg>
+        
+        <button type="button" class="btn  btn-primary custom-btn  measure-click" id='lever_id' lever-name='Reduce 301-day readmits'><span class="vl-bagde"> 1</span> Reduce 31-day readmits</button>
+      </div>
+      <div class="hidden-button" hidden="true">
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l5-lever" level='l5' id="l5-lever" style="background: #bb8738;text-align: center;border-radius: 50%;width: 62px;">L5</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                                
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l3-lever" id="l3-lever" level='l3' style="background: #73968b;text-align: center;border-radius: 50%;width: 62px;">L3</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l2-lever" level='l2' id="l2-lever" style="background: #bb3874;text-align: center;border-radius: 50%;width: 62px;">L2</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+           </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="vv-1">
+        <button type="button" class="btn  btn-primary custom-btn" id='' style="background: #388bbb;text-align: center;">Cost and Utilization</button>
+        <svg class="svg-link"><path stroke="black" d="M5 40 l215 0"></path></svg>
+        
+        <button type="button" class="btn  btn-primary custom-btn  measure-click" id='lever_id' lever-name='Reduce SNF cost'><span class="vl-bagde"> 2</span> Reduce SNF cost</button>
+      </div>
+      <div class="hidden-button" hidden="true">
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l5-lever" level='l5' id="l5-lever" style="background: #bb8738;text-align: center;border-radius: 50%;width: 62px;">L5</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                                
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l3-lever" id="l3-lever" level='l3' style="background: #73968b;text-align: center;border-radius: 50%;width: 62px;">L3</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l2-lever" level='l2' id="l2-lever" style="background: #bb3874;text-align: center;border-radius: 50%;width: 62px;">L2</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+           </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="vv-1">
+        <button type="button" class="btn  btn-primary custom-btn" id='' style="background: #388bbb;text-align: center;">Cost and Utilization</button>
+        <svg class="svg-link"><path stroke="black" d="M5 40 l215 0"></path></svg>
+        
+        <button type="button" class="btn  btn-primary custom-btn  measure-click" id='lever_id' lever-name='Reduce 301-day readmits'><span class="vl-bagde"> 3</span> Reduce ED spend</button>
+      </div>
+      <div class="hidden-button" hidden="true">
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l5-lever" level='l5' id="l5-lever" style="background: #bb8738;text-align: center;border-radius: 50%;width: 62px;">L5</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                                
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l3-lever" id="l3-lever" level='l3' style="background: #73968b;text-align: center;border-radius: 50%;width: 62px;">L3</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l2-lever" level='l2' id="l2-lever" style="background: #bb3874;text-align: center;border-radius: 50%;width: 62px;">L2</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+           </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="vv-1">
+        <button type="button" class="btn  btn-primary custom-btn" id='' style="background: #388bbb;text-align: center;">Cost and Utilization</button>
+        <svg class="svg-link"><path stroke="black" d="M5 40 l215 0"></path></svg>
+        
+        <button type="button" class="btn  btn-primary custom-btn  measure-click" id='lever_id' lever-name='Referral pattern management'><span class="vl-bagde"> 4</span> Referral pattern management</button>
+      </div>
+      <div class="hidden-button" hidden="true">
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l5-lever" level='l5' id="l5-lever" style="background: #bb8738;text-align: center;border-radius: 50%;width: 62px;">L5</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                                
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l3-lever" id="l3-lever" level='l3' style="background: #73968b;text-align: center;border-radius: 50%;width: 62px;">L3</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l2-lever" level='l2' id="l2-lever" style="background: #bb3874;text-align: center;border-radius: 50%;width: 62px;">L2</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+           </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="vv-1">
+        <button type="button" class="btn  btn-primary custom-btn" id='' style="background: #388bbb;text-align: center;">Cost and Utilization</button>
+        <svg class="svg-link"><path stroke="black" d="M5 40 l215 0"></path></svg>
+        
+        <button type="button" class="btn  btn-primary custom-btn  measure-click" id='lever_id' lever-name='Prevent unnecessary test'><span class="vl-bagde"> 5</span> Prevent unnecessary test</button>
+      </div>
+      <div class="hidden-button" hidden="true">
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l5-lever" level='l5' id="l5-lever" style="background: #bb8738;text-align: center;border-radius: 50%;width: 62px;">L5</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                                
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l3-lever" id="l3-lever" level='l3' style="background: #73968b;text-align: center;border-radius: 50%;width: 62px;">L3</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l2-lever" level='l2' id="l2-lever" style="background: #bb3874;text-align: center;border-radius: 50%;width: 62px;">L2</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+           </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="vv-1">
+        <button type="button" class="btn  btn-primary custom-btn" id='' style="background: #388bbb;text-align: center;">Cost and Utilization</button>
+        <svg class="svg-link"><path stroke="black" d="M5 40 l215 0"></path></svg>
+        
+        <button type="button" class="btn  btn-primary custom-btn  measure-click" id='lever_id' lever-name='Increase generic drug use'><span class="vl-bagde"> 6</span> Increase generic drug use</button>
+      </div>
+      <div class="hidden-button" hidden="true">
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l5-lever" level='l5' id="l5-lever" style="background: #bb8738;text-align: center;border-radius: 50%;width: 62px;">L5</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                                
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l3-lever" id="l3-lever" level='l3' style="background: #73968b;text-align: center;border-radius: 50%;width: 62px;">L3</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l2-lever" level='l2' id="l2-lever" style="background: #bb3874;text-align: center;border-radius: 50%;width: 62px;">L2</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+           </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="vv-1">
+        <button type="button" class="btn  btn-primary custom-btn" id='' style="background: #388bbb;text-align: center;">Cost and Utilization</button>
+        <svg class="svg-link"><path stroke="black" d="M5 40 l215 0"></path></svg>
+        
+        <button type="button" class="btn  btn-primary custom-btn  measure-click" id='lever_id' lever-name='Medication adherence'><span class="vl-bagde"> 7</span> Medication adherence</button>
+      </div>
+      <div class="hidden-button" hidden="true">
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l5-lever" level='l5' id="l5-lever" style="background: #bb8738;text-align: center;border-radius: 50%;width: 62px;">L5</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                                
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l3-lever" id="l3-lever" level='l3' style="background: #73968b;text-align: center;border-radius: 50%;width: 62px;">L3</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l2-lever" level='l2' id="l2-lever" style="background: #bb3874;text-align: center;border-radius: 50%;width: 62px;">L2</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+           </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="vv-1">
+        <button type="button" class="btn  btn-primary custom-btn" id='' style="background: #388bbb;text-align: center;">Cost and Utilization</button>
+        <svg class="svg-link"><path stroke="black" d="M5 40 l215 0"></path></svg>
+        
+        <button type="button" class="btn  btn-primary custom-btn  measure-click" id='lever_id' lever-name='Reduce network leakage'><span class="vl-bagde"> 8</span> Reduce network leakage</button>
+      </div>
+      <div class="hidden-button" hidden="true">
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l5-lever" level='l5' id="l5-lever" style="background: #bb8738;text-align: center;border-radius: 50%;width: 62px;">L5</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                                
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l3-lever" id="l3-lever" level='l3' style="background: #73968b;text-align: center;border-radius: 50%;width: 62px;">L3</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l2-lever" level='l2' id="l2-lever" style="background: #bb3874;text-align: center;border-radius: 50%;width: 62px;">L2</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+           </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="vv-1">
+        <button type="button" class="btn  btn-primary custom-btn" id='' style="background: #388bbb;text-align: center;">Cost and Utilization</button>
+        <svg class="svg-link"><path stroke="black" d="M5 40 l215 0"></path></svg>
+        
+        <button type="button" class="btn  btn-primary custom-btn  measure-click" id='lever_id' lever-name='Contract renegotiation'><span class="vl-bagde"> 9</span> Contract renegotiation</button>
+      </div>
+      <div class="hidden-button" hidden="true">
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l5-lever" level='l5' id="l5-lever" style="background: #bb8738;text-align: center;border-radius: 50%;width: 62px;">L5</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                                
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l3-lever" id="l3-lever" level='l3' style="background: #73968b;text-align: center;border-radius: 50%;width: 62px;">L3</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l2-lever" level='l2' id="l2-lever" style="background: #bb3874;text-align: center;border-radius: 50%;width: 62px;">L2</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+           </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="vv-1">
+        <button type="button" class="btn  btn-primary custom-btn" id='' style="background: #388bbb;text-align: center;">Cost and Utilization</button>
+        <svg class="svg-link"><path stroke="black" d="M5 40 l215 0"></path></svg>
+        
+        <button type="button" class="btn  btn-primary custom-btn  measure-click" id='lever_id' lever-name='Improve quality measures'><span class="vl-bagde"> 10</span> Improve quality measures</button>
+      </div>
+      <div class="hidden-button" hidden="true">
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l5-lever" level='l5' id="l5-lever" style="background: #bb8738;text-align: center;border-radius: 50%;width: 62px;">L5</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                                
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l3-lever" id="l3-lever" level='l3' style="background: #73968b;text-align: center;border-radius: 50%;width: 62px;">L3</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l2-lever" level='l2' id="l2-lever" style="background: #bb3874;text-align: center;border-radius: 50%;width: 62px;">L2</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+           </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="vv-1">
+        <button type="button" class="btn  btn-primary custom-btn" id='' style="background: #388bbb;text-align: center;">Cost and Utilization</button>
+        <svg class="svg-link"><path stroke="black" d="M5 40 l215 0"></path></svg>
+        
+        <button type="button" class="btn  btn-primary custom-btn  measure-click" id='lever_id' lever-name='Improve coding accuracy'><span class="vl-bagde"> 11</span> Improve coding accuracy</button>
+      </div>
+      <div class="hidden-button" hidden="true">
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l5-lever" level='l5' id="l5-lever" style="background: #bb8738;text-align: center;border-radius: 50%;width: 62px;">L5</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                                
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l3-lever" id="l3-lever" level='l3' style="background: #73968b;text-align: center;border-radius: 50%;width: 62px;">L3</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l2-lever" level='l2' id="l2-lever" style="background: #bb3874;text-align: center;border-radius: 50%;width: 62px;">L2</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+           </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="vv-1">
+        <button type="button" class="btn  btn-primary custom-btn" id='' style="background: #388bbb;text-align: center;">Cost and Utilization</button>
+        <svg class="svg-link"><path stroke="black" d="M5 40 l215 0"></path></svg>
+        
+        <button type="button" class="btn  btn-primary custom-btn  measure-click" id='lever_id' lever-name='Retain low risk members'><span class="vl-bagde"> 12</span> Retain low risk members</button>
+      </div>
+      <div class="hidden-button" hidden="true">
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l5-lever" level='l5' id="l5-lever" style="background: #bb8738;text-align: center;border-radius: 50%;width: 62px;">L5</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                                
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l3-lever" id="l3-lever" level='l3' style="background: #73968b;text-align: center;border-radius: 50%;width: 62px;">L3</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+            </div>
+            <div style="display: -webkit-inline-box;width: max-content;">
+                <svg class="svg-link" style="margin-left: 4px;margin-top: 28px;"><path stroke="black" d="M5 40 l215 0"></path></svg>
+                <div>
+                    <button type="button" class="btn  btn-primary custom-btn l2-lever" level='l2' id="l2-lever" style="background: #bb3874;text-align: center;border-radius: 50%;width: 62px;">L2</button>
+                    <div style="display: grid;width: max-content;padding: 0;margin: 0;position: absolute;" class='lever-tables' hidden="true">
+                    
+                    </div>
+                </div>
+           </div>
+      </div>
+    </div>
+
+
+
+    
+    
+      
+ {% csrf_token %}
+
+
+
+
+</div>
+<!--Report Modal -->
+
+<div id="report-modal" class="modal fade" tabindex="-1" role="dialog" >
+  <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Report</h2>
+            <span class='close' id="closeReport">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="container" style="height: 500px;">
+                <div class="box well"></div>
+          
+      <!-- <h2>Bordered Table</h2> -->
+      <!-- <p>The .table-bordered class adds borders to a table:</p>             -->
+                <table class="table table-bordered reportTable" hidden>
+                    <thead id='thead'>
+                    </thead>
+                    <tbody id='tbody'>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" name="next"  style="width:110px;height:40px;"  class="btn-sm btn-outline-success " id='downloadReport' >Download</button>  
+        </div>
+    </div>
+</div>
+
+      
+      
+<!---delete Module-->
+<div id="delete-modal" class="modal fade" tabindex="-1" role="dialog" hidden >
+    <div class="modal-content" style="width: 40%;">
+        <div class="modal-header">
+            <h2>Buildsheet</h2>
+            <span class='closeDelete' >&times;</span>
+        </div>
+        <div class="modal-body">
+            <h5>Do You Want Delete Buildsheet?</h5>
+        </div>
+        <div class="modal-footer">
+           <button type="button"   style="width:110px;height:40px;"  class="btn-sm btn-outline-success cancelDelete" >Cancel</button> 
+           <button type="button"   style="width:110px;height:40px;"  class="btn-sm btn-outline-danger delete" >Delete</button> 
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="NewBuildsheetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="max-width: 600px !important;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Buildsheet</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">ACO Name<sup style="color: red;">*</sup></p>
+        <div class="sc-caSCKo noAmc"><input class="sc-kjoXOD gAkajm" required="" type="text" id='aconm' value="" style="height: 30px; margin-bottom: 0px;"></div>
+        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">ACO ID<sup style="color: red;">*</sup></p>
+        <div class="sc-caSCKo noAmc"><input class="sc-kjoXOD gAkajm" id="acoid" required="" type="text" value="" style="height: 30px; margin-bottom: 0px;"></div>
+        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">Source Name<sup style="color: red;">*</sup></p>
+        <div class="sc-caSCKo noAmc"><input class="sc-kjoXOD gAkajm" id="source_name" required="" type="text" value="" style="height: 30px; margin-bottom: 0px;"></div>
+        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">Source ID<sup style="color: red;">*</sup></p>
+        <div class="sc-caSCKo noAmc"><input class="sc-kjoXOD gAkajm" id="source_id" required="" type="text" value="" style="height: 30px; margin-bottom: 0px;"></div>
+        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">Vendor Name<sup style="color: red;"></sup></p>
+        <div class="sc-caSCKo noAmc"><input class="sc-kjoXOD gAkajm" id="vendor_name" required="" type="text" value="" style="height: 30px; margin-bottom: 0px;"></div>
+        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">Vendor Version<sup style="color: red;"></sup></p>
+        <div class="sc-caSCKo noAmc"><input class="sc-kjoXOD gAkajm" id="vendor_version" required="" type="text" value="" style="height: 30px; margin-bottom: 0px;"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id='create-buildsheet'>Create Buildsheet</button>
+      </div>
+    </div>
+  </div>
+</div>       
+          
+<script src="{% static 'js/ui/value-levers.js' %}"></script>       
+{% endblock %}

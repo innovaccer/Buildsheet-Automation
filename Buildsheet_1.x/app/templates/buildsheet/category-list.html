@@ -1,0 +1,204 @@
+{% extends "buildsheet/base.html" %}
+{% block content %}
+{% load static %}
+
+<div class='header' style="padding: 4px 0px;">
+    <div class='row' style=" margin: 0;">
+      <div class='col-xl-6'>
+        <div class="padding-top-2" style="max-width: 35em;">
+            <p style="font-size: 12px; line-height: 1; margin: 0;">
+                <a class="text-gray" href="#" onClick='buildsheetPage()' id='buidsheet-backlink'>Buildsheets</a>
+                <span class="text-gray"> /</span>
+            </p>
+            <div class="sc-epnACN fpXcBW" title={{buildsheet_name}} style="text-transform: capitalize";>{{buildsheet.0}}</div>
+        </div>
+      </div>
+      <div class='col-xl-6' style="padding: 7px;">
+        <button class="float-right sc-bwzfXH DjoYM" style="font-weight: 400; margin-left:0;margin-right:3px;" data-toggle="modal" data-target="#NewBuildsheetModal">Edit Buildsheet</button>
+        <button class="float-right margin-left-0 margin-right-3 sc-bwzfXH Rpxft category-addlink" style="font-weight: 400;margin-left:0;margin-right:3px;">Add Category</button>
+        
+      </div>
+    </div>
+</div>
+
+<div class="container-fluid"> 
+    <div class="category-list">
+        <table class="table table-hover" style="border-style: hidden;margin: 0;">
+          <thead style="text-align: -webkit-center;">
+            <tr>
+              <th scope="col">Category</th>
+              <th scope="col">Modified On</th>
+              <th scope="col">Options</th>
+            </tr>
+          </thead>
+          <tbody style="text-align: -webkit-center;">
+            {% for buildsheet in buildsheets %}
+                <tr class ="{% cycle '' '' as rowcolors  %}">
+                  <td scope="row">{{buildsheet.0}}</td>
+                  <td>{{buildsheet.4}}</td>
+                  <td>
+                    <div style="width: 30%;">
+                        <a class="form-inline category-option deleteOption " align="right" aco_id={{buildsheet.2}} source_id={{buildsheet.3}} meta_id={{buildsheet.1}} data-toggle="modal" title="Delete Buildsheet" data-target="#delete-modal" data-placement="right" href="#" style="float:right;"><i class="fas fa-trash"></i></a>
+                        <a class="form-inline category-option edit " align="right" aco_id={{buildsheet.2}} buildsheet_id={{buildsheet.5}} source_id={{buildsheet.3}} meta_id={{buildsheet.1}} data-toggle="popover" title="Edit Buildsheet" data-trigger="click" data-placement="right" href="#" style="float:right;"><i class="fas fa-edit"></i></a>
+                        <a class="form-inline category-option getReport " align="right" aco_id={{buildsheet.2}} source_id={{buildsheet.3}} meta_id={{buildsheet.1}} data-toggle="popover" title="Get Report" data-trigger="click" data-placement="right" href="#" style="float:right;"><i class="fas fa-tasks"></i></a>
+                        <a class="form-inline category-option getbuildsheet " align="right" aco_id={{buildsheet.2}} source_id={{buildsheet.3}} meta_id={{buildsheet.1}} data-toggle="popover" title="Download Buildsheet" data-trigger="click" data-placement="right" href="#" style="float:right;"><i class="fas fa-file-download"></i></a>
+                        <a class="form-inline category-option getsql " align="right" buildsheet_id={{buildsheet.1}} data-toggle="modal" data-target="#sqlQuery" title="Get SQL" data-trigger="click" data-placement="right" href="#" style="float:right;"><i class="fas fa-database"></i></a>
+                    </div>
+                        
+                  </td>
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table> 
+    </div>     
+     
+
+ {% csrf_token %}
+
+
+
+</div>
+<!--Report Modal -->
+
+<div id="report-modal" class="modal fade" tabindex="-1" role="dialog" >
+  <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Report</h2>
+            <span class='close' id="closeReport">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="container" style="height: 500px;">
+                <div class="box well"></div>
+          
+      <!-- <h2>Bordered Table</h2> -->
+      <!-- <p>The .table-bordered class adds borders to a table:</p>             -->
+                <table class="table table-bordered reportTable" hidden>
+                    <thead id='thead'>
+                    </thead>
+                    <tbody id='tbody'>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" name="next"  style="width:110px;height:40px;"  class="btn-sm btn-outline-success " id='downloadReport' >Download</button>  
+        </div>
+    </div>
+</div>
+
+      
+      
+
+
+<!-- Modal -->
+<div class="modal fade" id="NewBuildsheetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="max-width: 600px !important;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Buildsheet</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">OLAP Version<sup style="color: red;">*</sup></p>
+        <div class="sc-caSCKo noAmc">
+          <select class="sc-kjoXOD gAkajm" id='olap_version'>
+                <option value="{{buildsheet.9}}">{{buildsheet.9}}</option>
+                {% for olap_version in olap_version %}
+
+                <option value="{{olap_version.0}}">{{olap_version.0}}</option>
+                {% endfor %}
+                
+                </select>
+              </div>
+        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">ACO Name<sup style="color: red;">*</sup></p>
+        <div class="sc-caSCKo noAmc"><input class="sc-kjoXOD gAkajm" required="" type="text" id='aconm' value={{buildsheet.4}} style="height: 30px; margin-bottom: 0px;"></div>
+        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">ACO ID<sup style="color: red;">*</sup></p>
+        <div class="sc-caSCKo noAmc"><input class="sc-kjoXOD gAkajm" id="acoid" required="" type="text" value={{buildsheet.3}} style="height: 30px; margin-bottom: 0px;"></div>
+
+        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">Vendor Name<sup style="color: red;">*</sup></p>
+        <div class="sc-caSCKo noAmc">
+          <select class="sc-kjoXOD gAkajm" id='vendor_name'>
+                <option value="{{buildsheet.7}}">{{buildsheet.7}}</option>
+                {% for vender_name in vender_name %}
+
+                <option value="{{vender_name.0}}">{{vender_name.0}}</option>
+                {% endfor %}
+                
+              </select>
+
+
+          <!--<input class="sc-kjoXOD gAkajm" id="vendor_name" required="" type="text" value={{buildsheet.7}} style="height: 30px; margin-bottom: 0px;">--></div>
+        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">Vendor Version<sup style="color: red;">*</sup></p>
+        <div class="sc-caSCKo noAmc"><input class="sc-kjoXOD gAkajm" id="vendor_version" required="" type="text" value={{buildsheet.8}} style="height: 30px; margin-bottom: 0px;"></div>
+        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">Source Name<sup style="color: red;">*</sup></p>
+        <div class="sc-caSCKo noAmc">
+          
+          <input class="sc-kjoXOD gAkajm" id="source_name" required="" type="text" value={{buildsheet.6}} style="height: 30px; margin-bottom: 0px;"></div>
+
+
+        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">Source ID<sup style="color: red;">*</sup></p>
+        <div class="sc-caSCKo noAmc"><input class="sc-kjoXOD gAkajm" id="source_id" required="" type="text" value={{buildsheet.5}} style="height: 30px; margin-bottom: 0px;"></div>
+        
+
+          <!--<input class="sc-kjoXOD gAkajm" id="vendor_version" required="" type="text" value="" style="height: 30px; margin-bottom: 0px;">-->
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id='update-buildsheet' buildsheet_id={{buildsheet.2}}>Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Query Modal-->
+<div class="modal  fade" id="sqlQuery" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">SQL Query</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <textarea class="form-control custom-textarea" id="query-textarea" rows="3" readonly="true"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm" onclick="copy($('#query-textarea').val())">Copy Insert</button>
+        <button type="button" class="btn btn-primary btn-sm" onclick="copy($('#query-textarea').val().replace(/^[^\(]+\([^\)]+\)\n*/g,''))">Copy Select</button>
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal  fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Category</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <h5>Do You Want Delete Category?</h5>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-danger delete" >Delete</button>
+        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>      
+<script src="{% static 'js/ui/buildsheet/category-list.js' %}"></script>       
+{% endblock %}

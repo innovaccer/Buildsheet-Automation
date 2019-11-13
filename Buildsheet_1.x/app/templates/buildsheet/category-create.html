@@ -1,0 +1,298 @@
+{% extends "buildsheet/base.html" %}
+{% block content %}
+{% load static %}
+
+
+<div class='header' style="padding: 0;">
+    
+	<div class="sc-iuJeZd hLYofL">
+		<div class="padding-top-3" style="font-size: 12px; line-height: 1;">
+			<a class="text-gray" href="#" onClick='buildsheetPage()'>Buildsheets / </a>
+			<a class="text-gray" buildsheet_id={{buildsheet.2}} href="#" onClick='backtoBuildsheetPage()'>{{buildsheet.0}} /</a>
+		</div>
+		<div class="sc-esOvli ggnHaG">New Category</div>
+	</div>
+</div>
+{% csrf_token %}
+<!-- MultiStep Form -->
+<div class="row" style=" margin: 0;">
+    <div class="col-md-12 col-md-offset-3">
+        <form id="msform">
+            <!-- progressbar -->
+            <ul id="progressbar">
+                <li class="active">Meta Details</li>
+                <li>From & Joins</li>
+                <li>Mapping</li>
+            </ul>
+            <!-- fieldsets -->
+            <fieldset id='hard' buildsheet_id={{buildsheet.2}} >
+                <h2 class="fs-title">Meta Details</h2>
+                <h3 class="fs-subtitle">Please provide below inputs</h3>
+
+                <div class="card container">
+                	<input type="hidden" value={{buildsheet.9}}  id="olap_version" placeholder="Olap version" >
+			  		<div class="row">
+			    		<div class="col-sm">
+			      			<label for="">Source ID<span class="text-danger">*</span></label><br>
+							<input type="number" value={{buildsheet.5}}  id="source_id" placeholder="Source ID" class="form-control form-control-sm form-control-custom" readonly="true">
+			    		</div>
+			    		<div class="col-sm">
+			      			<label for="">Source Name <span class="text-danger">*</span></label><br>
+							<input type="text" value={{buildsheet.6}} name="source_name" placeholder="Source Name" id='source_name' class="form-control form-control-sm form-control-custom" readonly="true">
+			    		</div>
+			    		<div class="col-sm">
+			      			<label for="">ACO ID <span class="text-danger">*</span></label><br>
+							<input type="number" value={{buildsheet.3}} id="aco_id" placeholder="ACO ID" class="form-control form-control-sm form-control-custom" readonly="true">
+			    		</div>
+			    		<div class="col-sm">
+			      			<label for="">ACO Name <span class="text-danger">*</span></label><br>
+							<input type="text" value={{buildsheet.4}} name="aco_nm" placeholder="ACO Name" id='aco_nm' class="form-control form-control-sm form-control-custom" readonly="true">
+			    		</div>
+			    		<div class="col-sm">
+			      			<label for="">Vendor Name <span class="text-danger"></span></label><br>
+							<input type="text" value={{buildsheet.7}} name="vendor_name" placeholder="Vendor Name" id='vendor_name' class="form-control form-control-sm form-control-custom" readonly="true">
+			    		</div>
+			    	</div>
+			  		<div class="row">
+			  			<div class="col-sm">
+			      			<label for="">Vendor Version <span class="text-danger"></span></label><br>
+							<input type="text" value={{buildsheet.8}} name="vendor_version" placeholder="Vendor Version" id='vendor_version' class="form-control form-control-sm form-control-custom" readonly="true">
+			    		</div>
+			  			<div class="col-sm">
+			      			<label for=""> Default L1 Schema <span class="text-danger">*</span></label><br>
+							<select class="form-control form-control-sm form-control-custom" id='dflt_l1_schema'>
+								<option value="">Select Schema</option>
+								{% for schema in schemas %}
+
+								<option value="{{schema}}">{{schema}}</option>
+								{% endfor %}
+							</select>
+			    		</div>
+			    		<div class="col-sm">
+			      			<label for=""> L2 Schema <span class="text-danger">*</span></label><br>
+							
+							<select class="form-control form-control-sm form-control-custom" id='l2_schema'>
+								<option value="">Select Schema</option>
+								{% for schema in schemas %}
+
+								<option value="{{schema}}">{{schema}}</option>
+								{% endfor %}
+							</select>
+			    		</div>
+			    		<div class="col-sm">
+			      			<div class="form-group">
+								<label for="">L2 Table <span class="text-danger">*</span></label><br>
+								<select class="form-control form-control-sm form-control-custom" id='l2_table'>
+									<option value="">Select table</option>
+								</select>
+						 	</div>
+			    		</div>
+			  			<div class="col-sm">
+			      			<label for="">Source Type <span class="text-danger">*</span></label><br>
+							<select class="form-control form-control-sm form-control-custom" id='source_type'>
+								<option value="">Select type</option>
+								{% for source_type in source_type %}
+
+								<option value="{{source_type.0}}">{{source_type.0}}</option>
+								{% endfor %}
+
+								
+								
+							</select>
+
+
+							<!--<input type="text" name="source_type" placeholder="Source Type"  id ='source_type' class="form-control form-control-sm form-control-custom">-->
+			    		</div>
+			  		</div>
+			  		<div class="row">
+			    		<div class="col-sm">
+			      			<label for="">Author <span class="text-danger">*</span></label><br>
+							<input type="text" name="author" placeholder="Author" id='author' class="form-control form-control-sm form-control-custom">
+			    		</div>
+			  			<div class="col-sm">
+			      			<label for="">Source File Name <span class="text-danger"></span></label><br>
+							<input type="text" name="source_file_name" placeholder="Source File Name"  id ='source_file_name' class="form-control form-control-sm form-control-custom">
+			    		</div>
+			    		
+			    		<div class="col-sm">
+			      			<label for="">Workspace ID <span class="text-danger"></span></label><br>
+							<input type="text" name="workspace_id" placeholder="Workspace ID" id='workspace_id' class="form-control form-control-sm form-control-custom">
+			    		</div>
+			    		<div class="col-sm">
+			      			<label for="">Workflow ID <span class="text-danger"></span></label><br>
+							<input type="text" name="workflow_id" placeholder="Workflow ID" id='workflow_id' class="form-control form-control-sm form-control-custom">
+			    		</div>
+			    		<div class="col-sm">
+			      			<label for="">Pipeline ID <span class="text-danger"></span></label><br>
+							<input type="text" name="pipeline_id" id='pipeline_id' placeholder="Pipeline ID" class="form-control form-control-sm form-control-custom">
+			    		</div>
+			  		</div>
+				</div>
+				<input type="button" name="next" id='next' class="next action-button" value="Next"/>
+            </fieldset>
+            <fieldset id='from-joins' hidden>
+                <h2 class="fs-title">From & Joins</h2>
+                <h3 class="fs-subtitle">Please provide below inputs</h3>
+                <div  id='load_conditions'>
+					<div class="card container" style="padding:7px;">
+						<label for="">From <span class="text-danger">*</span></label><br>
+						<div class='row'>
+							<div class="col-sm">
+								<select class="form-control-sm fschema">
+									<option value="">Select Schema</option>
+								</select>
+							</div>
+							<div class="col-sm form-group">
+								<select class="form-control-sm from_table" id='main_table'>
+									<option value="">Select From</option>
+								</select>
+							</div>
+							<div class="col-sm form-group">
+								<div class="badge alias-badge">Alias : T1</div>
+							</div>
+						</div>
+					</div>
+					<div class="card container" style="padding:7px;margin-top: 20px;">
+						<label for="">Joins <span class="text-danger"></span></label><br>
+						<div class='joins'>
+						</div>
+						<div class="row">
+							<div class='col-xl-6'>
+								<!-- <button type="button" meta_id='0' id='load-build' style="FLOAT: LEFT;" align='right'  class="btn-sm btn-outline-primary">SUBMIT ALIAS</button> -->
+							</div>
+							<div class='col-xl-6'>
+								<button type="button"  id='add_join' style="FLOAT: RIGHT;" align='right'  class="btn-sm "><span class="glyphicon glyphicon-plus"></span></button>
+							</div>
+						</div>
+					</div>
+		 		</div>
+		 		<input type="button" name="previous" id='first-previous' class="previous action-button-previous" value="Previous"/>
+                <input type="button" name="next" id='second-next ' meta_id='0' class="next action-button load-build" value="Next"/>
+            </fieldset>
+            <fieldset id='build' hidden>
+                <h2 class="fs-title">Mapping</h2>
+                <h3 class="fs-subtitle">Please provide below inputs</h3>
+                <div class='form-container' id='build' >
+					<div class='card container'>
+						<div class="row build-head">
+							<div class="col-sm">
+								<label for="">Alias <span class="text-danger"></span></label><br>
+							</div>
+							<div class="col-sm">
+								<label for="">L1 Table Columns <span class="text-danger"></span></label><br>
+							</div>
+							<div class="col-sm">
+								<label for="" style="padding-left: 10px;">Rule <span class="text-danger">*</span></label><br>
+							</div>
+							<div class="col-sm">
+								<label for="">Transformation <span class="text-danger"></span></label><br>
+							</div>
+							<!-- <div class="col-sm">
+								<label for="">L2 Table <span class="text-danger">*</span></label><br>
+							</div> -->
+							<div class="col-sm">
+								<label for="">L2 Table Columns <span class="text-danger"></span></label><br>
+							</div>
+							<div class="col-sm">
+								<label for="">L2 DataType<span class="text-danger"></span></label><br>
+							</div>
+						</div>
+						<div id ='loadrows'></div>
+						
+					</div>
+					<div class='wheres card container' style="padding:7px;margin-top: 20px;" >
+						<label for="">Where <span class="text-danger"></span></label>
+						<div>
+							<div class='col-xl-12 '>
+								<textarea rows="3" cols="200" id="where_condition"></textarea>
+							</div>
+						</div>
+					</div>
+					<!-- <div class='row'>
+						<div class="col-xl-3">
+						 	<button type="button" name="next" id='back' style="width:100px;height:40px;margin-left: 17px;"   class="btn-sm btn-outline-primary">Back </button>
+					 	</div>
+						 <div class="col-xl-6">
+							 <button type="button" name="next" id='submit' style="width:100px;height:40px;margin-left: 233px;" class="btn-sm btn-outline-success" hidden>Submit </button>
+						 </div>
+						 <div class="col-xl-3">
+							 <button type="button" name="next" id='cancel' style="width:100px;height:40px;float:left;margin-left: 139px;"   class="btn-sm btn-outline-danger" onClick="window.location.reload();">Cancel </button>
+						 </div>
+				 	</div> -->
+				</div>
+                <input type="button" name="previous" id='second-previous'  class="previous action-button-previous" value="Previous"/>
+                <input type="submit" id='submit' name="submit" class="submit action-button" value="Submit"/>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<!-- /.MultiStep Form -->
+
+<!--SQL Modal-->
+<!-- <div id="sql-modal" class="modal fade" tabindex="-1" role="dialog" >
+	
+	<div class="modal-content">
+		<div class="modal-header">
+			<h2>Buildsheet Successfully Submitted.</h2>
+			<span class='close' id="closemodal">&times;</span>
+		</div>
+		<div class="modal-body">
+			<textarea rows="8" cols="151" id='sql' hidden  style="padding: 20px;width: -webkit-fill-available;"  disabled="true"></textarea>	
+		</div>
+		<div class="modal-footer">
+			<button type="button" name="next"  style="width: 130px;height:40px;"  class="btn-sm btn-outline-success " id='getbuildsheet' >Get Buildsheet</button>
+			<button type="button" name="next"  style="width:100px;height:40px;"  class="btn-sm btn-outline-success " id='getsql' >Get SQL</button>  
+		</div>
+	</div>
+</div> -->
+
+
+<div class="modal  fade" id="sql-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Buildsheet Successfully Submitted!</h5>
+        <button type="button" class="close" onClick='backtoBuildsheetPage()' data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <textarea class="form-control custom-textarea" id="sql" rows="3" readonly="true"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+      	<button type="button" name="next"  class="btn btn-primary btn-sm" id='getbuildsheet' ><span class="glyphicon glyphicon glyphicon-download"></span> Buildsheet</button>
+        <button type="button" class="btn btn-primary btn-sm" onclick="copy($('#sql').val())">Copy Insert</button>
+        <button type="button" class="btn btn-primary btn-sm" onclick="copy($('#sql').val().replace(/^[^\(]+\([^\)]+\)\n*/g,''))">Copy Select</button>
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--transform Model-->
+<div class="modal  fade" id="transform-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Transform</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <textarea class="form-control" id="transform-textarea" rows="6"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+      	<button type="button" name="next"  class="btn btn-primary btn-sm" id='submit-transform' >Submit</button>
+      	<button type="button" class="btn btn-sm btn-secondary transform-close" data-dismiss="modal" hidden>Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="{% static 'js/ui/buildsheet/category-create.js' %}"></script>
+
+{% endblock %}
