@@ -396,6 +396,14 @@ function loadMapping() {
 			$('.load-l1-data').popover({container: 'body'});
 		}
 		tranformToModal();
+		$('.rule').off('change');
+		$('.rule').on('change', function(e) {
+				if($(this).val()==''){
+					$(this).parent().parent().find('.alias_select').val('');
+					$(this).parent().parent().find('.l1_column').val('');
+					$(this).parent().parent().find('.transform').val('');
+				}
+		});
 	});
 }
 
@@ -669,7 +677,7 @@ function buttons(){
 	$('#submit').off('click');
 	$('#submit').on('click', function(e) {
 		e.preventDefault();
-		if(validateBeforeSubmit() && validateMandatory()){
+		if(validateBeforeSubmit() /*&& validateMandatory()*/){
 			buildData();
 			
 		}
@@ -802,6 +810,9 @@ function buildData(){
 		row.source_column = $(value).find('.l1_column').val();
 		row.rule = $(value).find('.rule').val();
 		row.transform = $(value).find('.transform').val();
+		if($(value).find('.rule').val()=='hardcode' && $(value).find('.transform').val()==''){
+			row.transform ="''";
+		}
 		row.dest_schema = $('#l2_schema').val();
 		row.dest_table = $('#l2_table').val();
 		row.dest_column = $(value).find('.l2_column').val();
