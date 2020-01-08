@@ -42,7 +42,7 @@ def insertData(table,columns,values):
 			return	str(lastrowid)
 		else:
 			print "please check db connection"
-			return ''
+			return "please check db connection"
 	except Exception as e:
 		print str(e)
 		raise
@@ -257,7 +257,7 @@ def getMetaDetails(meta_id):
 		if con is not None:
 			cursor = con.cursor()
 
-			cursor.execute("select id,buildsheet_name,source_id,source_name,source_type,workflow_id,author,cast(ingestion_datetime as char),vendor_version,vendor_name,aco_id,aco_name,source_file_name,workspace_id,cast(indata_created_on as char) ,pipeline_id,cast(created as char),cast(modified as char),delete_flag,l1_schema from meta_data where id="+meta_id)
+			cursor.execute("select id,buildsheet_name,source_id,source_name,source_type,workflow_id,author,cast(ingestion_datetime as char),vendor_version,vendor_name,aco_id,aco_name,source_file_name,workspace_id,cast(indata_created_on as char) ,pipeline_id,cast(created as char),cast(modified as char),delete_flag,l1_schema,data_source,data_source_version from meta_data where id="+meta_id)
 			record = cursor.fetchall()
 			return record
 			
@@ -328,8 +328,9 @@ def getsemanticreportfromdb(aco_id,source_id,meta_id):
 		if con is not None:
 			cursor = con.cursor()
 			# print "aco_id:"+aco_id+" source_id:"+source_id+" workflow_id:"+workflow_id
-			record = cursor.callproc('qa_audit_semantic_report', [aco_id,source_id,meta_id,])
-
+			record = cursor.callproc('buildsheet_semont_report', [aco_id,source_id,meta_id,])
+			print("ontology/sementic")
+			print(record)
 			record =[]
 			for result in cursor.stored_results():
 					 record =result.fetchall()
@@ -402,6 +403,183 @@ def  getAllbuildsheetReport(aco_id,sourceid):
 			for result in cursor.stored_results():
 					 record =result.fetchall()
 			# print record 
+			return record
+			
+		else:
+			print "please check db connection"	
+			return None
+	except Exception as e:
+		print str(e)
+		raise
+
+def fetchTemplate(source_name,source_version,condition):
+	try:
+		con=connection()
+		if con is not None:
+			cursor = con.cursor()
+			cursor.execute("select id,source_table,source_column,destination_table,destination_column,rule_type,rule,alias from templates where  source_version='"+source_version+"' and   source_name='"+source_name+"' "+condition)
+			# print "select id,source_table,source_column,destination_table,destination_column,rule_type,rule,alias from templates where  source_version='"+source_version+"' and   source_name='"+source_name+"' "+condition
+			record = cursor.fetchall()
+			return record
+			
+		else:
+			print "please check db connection"	
+			return None
+	except Exception as e:
+		print str(e)
+		raise
+
+
+def getllCatSql(aco_id,source_id,meta_id,tp):
+	try:
+		con=connection()
+		if con is not None:
+			cursor = con.cursor()
+			# print "aco_id:"+aco_id+" source_id:"+source_id+" workflow_id:"+workflow_id
+			record = cursor.callproc('sp_unique_entity', [aco_id,source_id,meta_id,tp,])
+
+			record =[]
+			for result in cursor.stored_results():
+					 record =result.fetchall()
+			# print record
+			print(record) 
+			return record
+			
+		else:
+			print "please check db connection"	
+			return None
+	except Exception as e:
+		print str(e)
+		raise
+
+def getl2CatSql(aco_id,source_id,meta_id,tp):
+	try:
+		con=connection()
+		if con is not None:
+			cursor = con.cursor()
+			# print "aco_id:"+aco_id+" source_id:"+source_id+" workflow_id:"+workflow_id
+			record = cursor.callproc('sp_unique_entity', [aco_id,source_id,meta_id,tp,])
+
+			record =[]
+			for result in cursor.stored_results():
+					 record =result.fetchall()
+			# print record
+			print(record) 
+			return record
+			
+		else:
+			print "please check db connection"	
+			return None
+	except Exception as e:
+		print str(e)
+		raise
+
+
+def getSementicSQL(meta_id,table,column):
+	try:
+		con=connection()
+		if con is not None:
+			cursor = con.cursor()
+			# print "aco_id:"+aco_id+" source_id:"+source_id+" workflow_id:"+workflow_id
+			record = cursor.callproc('sp_semantic_load', [meta_id,table,column,])
+
+			record =[]
+			for result in cursor.stored_results():
+					 record =result.fetchall()
+			# print record
+			print(record) 
+			return record
+			
+		else:
+			print "please check db connection"	
+			return None
+	except Exception as e:
+		print str(e)
+		raise
+
+def getsqlforl1tol2(meta_id,key):
+	try:
+		con=connection()
+		if con is not None:
+			cursor = con.cursor()
+			# print "aco_id:"+aco_id+" source_id:"+source_id+" workflow_id:"+workflow_id
+			record = cursor.callproc('buildsheet_data_ingest', [meta_id,key,])
+
+			record =[]
+			for result in cursor.stored_results():
+					 record =result.fetchall()
+			# print record
+			#print(record) 
+			return record
+			
+		else:
+			print "please check db connection"	
+			return None
+	except Exception as e:
+		print str(e)
+		raise
+
+
+def patientValidateQuery(meta_id,ids,level,key):
+	try:
+		con=connection()
+		if con is not None:
+			cursor = con.cursor()
+			# print "aco_id:"+aco_id+" source_id:"+source_id+" workflow_id:"+workflow_id
+			# print ids
+			record = cursor.callproc('patient_validation', [meta_id,ids,level,key])
+
+			record =[]
+			for result in cursor.stored_results():
+					 record =result.fetchall()
+			# print record
+			#print(record) 
+			return record
+			
+		else:
+			print "please check db connection"	
+			return None
+	except Exception as e:
+		print str(e)
+		raise
+
+def getQuality(aco_id,source_id,meta_id):
+	try:
+		con=connection()
+		if con is not None:
+			cursor = con.cursor()
+			# print "aco_id:"+aco_id+" source_id:"+source_id+" workflow_id:"+workflow_id
+			# print ids
+			record = cursor.callproc('semantic_agg', [aco_id,source_id,meta_id])
+
+			record =[]
+			for result in cursor.stored_results():
+					 record =result.fetchall()
+			# print record
+			#print(record) 
+			return record
+			
+		else:
+			print "please check db connection"	
+			return None
+	except Exception as e:
+		print str(e)
+		raise
+
+def getTestcase(aco_id,source_id,meta_id,option):
+	try:
+		con=connection()
+		if con is not None:
+			cursor = con.cursor()
+			# print "aco_id:"+aco_id+" source_id:"+source_id+" workflow_id:"+workflow_id
+			# print ids
+			record = cursor.callproc('test_case_score', [aco_id,source_id,meta_id,option])
+
+			record =[]
+			for result in cursor.stored_results():
+					 record =result.fetchall()
+			# print record
+			#print(record) 
 			return record
 			
 		else:

@@ -1,16 +1,13 @@
-DROP PROCEDURE IF EXISTS `l2_data_load`;
-
 DELIMITER $$
-CREATE PROCEDURE `l2_data_load`(
+CREATE DEFINER=`root`@`%` PROCEDURE `l2_data_load`(
 IN alias_var varchar(4),
-IN l1_schema_var varchar(20),
-IN source_table_var  varchar(50),
-IN source_column_var varchar(50),
-IN rule_typ_var varchar(50),
+IN l1_schema_var varchar(100),
+IN source_table_var  varchar(100),
+IN source_column_var varchar(100),
+IN rule_typ_var varchar(100),
 IN rule_var text,
 IN meta_id_var INT
 )
-
 BEGIN
 #################################################################
 SET
@@ -25,7 +22,7 @@ SET
             '
                                     ')
 FROM
-    buildsheet_proj_stg_testing
+    buildsheet_data
 WHERE
     rule_type = 'from'
         AND meta_id = meta_id_var);
@@ -41,7 +38,7 @@ FROM
     (SELECT 
         CONCAT(rule_type, ' ', l2_schema, '.', destination_table, ' AS ', alias, ' ON ', rule) val
     FROM
-        buildsheet_proj_stg_testing
+        buildsheet_data
     WHERE
         meta_id = meta_id_var
             AND l2_schema != 'subquery'
@@ -62,7 +59,7 @@ SET @sq =
         SEPARATOR '
                 ')
 FROM
-    buildsheet_proj_stg_testing
+    buildsheet_data
 WHERE
     l2_schema = 'subquery'
         AND meta_id = meta_id_var);
@@ -72,21 +69,25 @@ WHERE
 
 IF rule_typ_var = 'no_rule' THEN
 SELECT 
-    CONCAT('select distinct (',
+    CONCAT('select ',
             alias_var,
             '.',
             source_column_var,
-            ' :: varchar) ',
+            ' :: varchar as val, count(*)cnt ',
             @frm,
             ' ',
             IFNULL(@joinn, ''),
             ' ',
-            IFNULL(@sq, '')) AS qry;
+            IFNULL(@sq, ''),
+            ' group by ',
+            alias_var,
+            '.',
+            source_column_var) AS qry;
             
 #################################################################
 ELSEIF rule_typ_var = 'to_date' THEN
 SELECT 
-    CONCAT('select distinct (',
+    CONCAT('select ',
             rule_typ_var,
             '(',
             alias_var,
@@ -94,29 +95,32 @@ SELECT
             source_column_var,
             ',',
             rule_var,
-            ') :: varchar)  ',
+            ') :: varchar) as val,count(*)cnt  ',
             @frm,
             ' ',
             IFNULL(@joinn, ''),
             ' ',
-            IFNULL(@sq, '')) qry;
+            IFNULL(@sq, ''),
+            ' group by val ') qry;
 
 #################################################################
 ELSEIF rule_typ_var = 'concat' THEN
 SELECT 
-    CONCAT('select distinct (',
+    CONCAT('select ',
             rule_var,
-            ')  ',
+            ' as val,count(*)cnt  ',
             @frm,
             ' ',
             IFNULL(@joinn, ''),
             ' ',
-            IFNULL(@sq, '')) qry;
+            IFNULL(@sq, ''),
+            ' group by ',
+            rule_var) qry;
 
 #################################################################
 ELSEIF rule_typ_var = 'REPLACE' THEN
 SELECT 
-    CONCAT('select distinct (replace(TRIM(',
+    CONCAT('select (replace(TRIM(',
             alias_var,
             '.',
             source_column_var,
@@ -124,24 +128,26 @@ SELECT
             TRIM(SUBSTRING_INDEX(rule_var, 'with', 1)),
             ',',
             TRIM(SUBSTRING_INDEX(rule_var, 'with', - 1)),
-            '))  ',
+            ')) as val,count(*)cnt ',
             @frm,
             ' ',
             IFNULL(@joinn, ''),
             ' ',
-            IFNULL(@sq, '')) qry;
+            IFNULL(@sq, ''),
+            ' group by val') qry;
 
 #################################################################
 ELSEIF rule_typ_var = 'custom' THEN    
 SELECT 
-    CONCAT('select distinct ',
+    CONCAT('select ',
             rule_var,
-            ' ',
+            ' :: varchar as val,count(*)cnt ',
             @frm,
             ' ',
             IFNULL(@joinn, ''),
             ' ',
-            IFNULL(@sq, '')) qry;
+            IFNULL(@sq, ''),
+            ' group by val') qry;
 
 #################################################################
 ELSEIF rule_typ_var = 'case' THEN
@@ -151,25 +157,27 @@ INSERT INTO casee_proc(id,alias,l1_schema,source_table,source_column,rule_typ,ru
 SELECT '1',alias_var,l1_schema_var,source_table_var,source_column_var,rule_typ_var,rule_var,meta_id_var;
 
 SELECT 
-    CONCAT('select distinct ',
+    CONCAT('select ',
             z.val,
-            ' from ',
+            ',count(*)cnt from ',
             l1_schema_var,
             '.',
             source_table_var,
             ' as ',
-            alias_var) qry
+            alias_var,
+            ' group by ',
+            z.val) qry
 FROM
     (SELECT 
         (CONCAT('CASE ', GROUP_CONCAT(y.val
                 SEPARATOR ' '), IFNULL(t2.val2, ''), '
-                                     END ')) val
+                                                 END ')) val
     FROM
         (SELECT 
         t.id,
             t.source_column,
             CONCAT('
-                                     WHEN TRIM(', t.alias, '.', t.source_column, ') = ', TRIM(SUBSTRING_INDEX(t.rule, 'with', 1)), ' THEN ', SUBSTRING_INDEX(SUBSTRING_INDEX(t.rule, 'with', - 1), 'else', 1)) val
+                                                 WHEN TRIM(', t.alias, '.', t.source_column, ') = ', TRIM(SUBSTRING_INDEX(t.rule, 'with', 1)), ' THEN ', SUBSTRING_INDEX(SUBSTRING_INDEX(t.rule, 'with', - 1), 'else', 1)) val
     FROM
         (SELECT 
         casee_proc.id,
@@ -183,7 +191,7 @@ FROM
     LEFT JOIN (SELECT 
         id,
             CONCAT('
-                                    ELSE ', SUBSTRING_INDEX(LOWER(rule), 'else', - 1)) val2
+                                                ELSE ', SUBSTRING_INDEX(LOWER(rule), 'else', - 1)) val2
     FROM
         casee_proc
     WHERE

@@ -9,12 +9,14 @@
         <link href="{% static 'css/ui/common.css' %}" rel="stylesheet" id="bootstrap-css">
         <link href="{% static 'css/predefined/jm.spinner.css' %}" rel="stylesheet" type="text/css">
         <link href="{% static 'css/predefined/all.css' %}" rel="stylesheet" type="text/css">
+    
         <script src="{% static 'js/predefined/jquery-3.4.1.min.js' %}"></script>
         <script src="{% static 'js/predefined/toastr.min.js' %}"></script>
         <script src="{% static 'js/predefined/popper.min.js' %}"></script>
         <script src="{% static 'js/predefined/bootstrap.min.js' %}"></script>
         <script src="{% static 'js/ui/jm.spinner.js' %}"></script> 
         <script src="{% static 'js/ui/common.js' %}"></script>
+
     </head>
     <body>
         <div>
@@ -32,21 +34,25 @@
                     <li class="nav-item active">
                         <a id='buildsheet-link' class="nav-link" href="#" onClick='buildsheetPage()'>Buildsheets <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a id='valuelever-link' class="nav-link" href="#" onClick='leverPage()'>Value Lever </a>
-                    </li>
-                    <!--<li class="nav-item ">
-                        <a class="nav-link" onClick='auditPage()' href="#">Audit Report</a>
+                    
+                    <!-- <li class="nav-item ">
+                        <a class="nav-link"  id='auditreport-link' onClick='auditPage()' href="#">Audit Report</a>
                     </li>
                     <li class="nav-item ">
                         <a class="nav-link" href="#" onClick='datacompletion()'>DCR</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item ">
-                        <a class="nav-link" href="#" onClick='unique()'>Unique Entity</a>
-                    </li>-->
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">User Guide</a>
+                        <a class="nav-link" id='uniqueentity-link' href="#" onClick='unique()'>Unique Entity</a>
                     </li>
+                    <!-- <li class="nav-item ">
+                        <a class="nav-link" href="#" id='patientvalidation-link' onClick='patientValidation()'>Patient Validation</a>
+                    </li> -->
+                    <!-- <li class="nav-item">
+                        <a id='valuelever-link' class="nav-link" href="#" onClick='leverPage()'>Value Lever </a>
+                    </li> -->
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="#">User Guide</a>
+                    </li> -->
                 </ul>
                 <a class="form-inline my-2 my-lg-0 btn" href="#">
                     <span class="glyphicon glyphicon-log-out"></span>

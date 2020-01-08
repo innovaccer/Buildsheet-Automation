@@ -1,5 +1,9 @@
 $(function() {
-	
+	$('.auditreport-link').off('click');
+	$('.auditreport-link').on('click', function(e) {
+		e.preventDefault();
+		window.location.href= window.location.origin+'/auditListing/view/'+$(this).attr('buildsheet_id');
+	});
 	$('.audit-report').off('click');
 	$('.audit-report').on('click', function(e) {
 		downloadReport($(this).attr('meta_id'));

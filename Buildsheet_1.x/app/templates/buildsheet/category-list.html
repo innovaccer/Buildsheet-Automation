@@ -1,7 +1,9 @@
 {% extends "buildsheet/base.html" %}
 {% block content %}
 {% load static %}
+<style type="text/css">
 
+</style>
 <div class='header' style="padding: 4px 0px;">
     <div class='row' style=" margin: 0;">
       <div class='col-xl-6'>
@@ -10,7 +12,7 @@
                 <a class="text-gray" href="#" onClick='buildsheetPage()' id='buidsheet-backlink'>Buildsheets</a>
                 <span class="text-gray"> /</span>
             </p>
-            <div class="sc-epnACN fpXcBW" title={{buildsheet_name}} style="text-transform: capitalize";>{{buildsheet.0}}</div>
+            <div class="sc-epnACN fpXcBW" title="{{buildsheet_name}}" style="text-transform: capitalize";>{{buildsheet.0}}</div>
         </div>
       </div>
       <div class='col-xl-6' style="padding: 7px;">
@@ -28,6 +30,8 @@
             <tr>
               <th scope="col">Category</th>
               <th scope="col">Modified On</th>
+              <th scope="col">Quality</th>
+              <th scope="col">Test Case</th>
               <th scope="col">Options</th>
             </tr>
           </thead>
@@ -35,13 +39,18 @@
             {% for buildsheet in buildsheets %}
                 <tr class ="{% cycle '' '' as rowcolors  %}">
                   <td scope="row">{{buildsheet.0}}</td>
-                  <td>{{buildsheet.4}}</td>
+                  <td>{{buildsheet.4}} </td>
+                  <td><a class='semantic-download' href='#' meta_id="{{buildsheet.1}}"><span class="badge semantic-badge" meta_id="{{buildsheet.1}}" style="width: 50%;">Loading...</span></a></td>
+                  <td><a class='testcase-download' href='#' meta_id="{{buildsheet.1}}"><span class="badge testcase-badge" meta_id="{{buildsheet.1}}" style="width: 50%;">Loading...</span></a></td>
                   <td>
-                    <div style="width: 30%;">
+                    <div style="width: 52%;">
+
                         <a class="form-inline category-option deleteOption " align="right" aco_id={{buildsheet.2}} source_id={{buildsheet.3}} meta_id={{buildsheet.1}} data-toggle="modal" title="Delete Buildsheet" data-target="#delete-modal" data-placement="right" href="#" style="float:right;"><i class="fas fa-trash"></i></a>
                         <a class="form-inline category-option edit " align="right" aco_id={{buildsheet.2}} buildsheet_id={{buildsheet.5}} source_id={{buildsheet.3}} meta_id={{buildsheet.1}} data-toggle="popover" title="Edit Buildsheet" data-trigger="click" data-placement="right" href="#" style="float:right;"><i class="fas fa-edit"></i></a>
-                        <a class="form-inline category-option getReport " align="right" aco_id={{buildsheet.2}} source_id={{buildsheet.3}} meta_id={{buildsheet.1}} data-toggle="popover" title="Get Report" data-trigger="click" data-placement="right" href="#" style="float:right;"><i class="fas fa-tasks"></i></a>
-                        <a class="form-inline category-option getbuildsheet " align="right" aco_id={{buildsheet.2}} source_id={{buildsheet.3}} meta_id={{buildsheet.1}} data-toggle="popover" title="Download Buildsheet" data-trigger="click" data-placement="right" href="#" style="float:right;"><i class="fas fa-file-download"></i></a>
+                        <a class="form-inline category-option patient-validation" align="right" aco_id={{buildsheet.2}} source_id={{buildsheet.3}} meta_id={{buildsheet.1}} data-toggle="popover" title="Patient Validation" data-trigger="click" data-placement="right" href="#" style="float:right;"><i class="fa fa-address-card"></i></a>
+                        <a class="form-inline category-option getsementic " align="right" aco_id={{buildsheet.2}} source_id={{buildsheet.3}} meta_id={{buildsheet.1}} data-toggle="popover" title="Get semantic" data-trigger="click" data-placement="right" href="#" style="float:right;"><i class="fas fa-chart-bar"></i></a>
+                        <a class="form-inline category-option getReport " align="right" aco_name="{{buildsheet.6}}"  category="{{buildsheet.0}}" source_name="{{buildsheet.7}}" aco_id={{buildsheet.2}} source_id={{buildsheet.3}} meta_id={{buildsheet.1}} data-toggle="popover" title="Get Report" data-trigger="click" data-placement="right" href="#" style="float:right;"><i class="fas fa-tasks"></i></a>
+                        <a class="form-inline category-option getbuildsheet " align="right" aco_name="{{buildsheet.6}}"  category="{{buildsheet.0}}" source_name="{{buildsheet.7}}" aco_id={{buildsheet.2}} source_id={{buildsheet.3}} meta_id={{buildsheet.1}} data-toggle="popover" title="Download Buildsheet" data-trigger="click" data-placement="right" href="#" style="float:right;"><i class="fas fa-file-download"></i></a>
                         <a class="form-inline category-option getsql " align="right" buildsheet_id={{buildsheet.1}} data-toggle="modal" data-target="#sqlQuery" title="Get SQL" data-trigger="click" data-placement="right" href="#" style="float:right;"><i class="fas fa-database"></i></a>
                     </div>
                         
@@ -61,14 +70,18 @@
 <!--Report Modal -->
 
 <div id="report-modal" class="modal fade" tabindex="-1" role="dialog" >
+  <div class="modal-dialog" role="document">
   <!-- Modal content -->
-    <div class="modal-content">
+    <div class="modal-content" style=" width: 100%; ">
         <div class="modal-header">
-            <h2>Report</h2>
-            <span class='close' id="closeReport">&times;</span>
+            <h5 class="modal-title" >Report</h5>
+            <!-- <span class='close' id="closeReport">&times;</span> -->
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         <div class="modal-body">
-            <div class="container" style="height: 500px;">
+            <!-- <div class="container" style="height: 500px; width:100% !important;"> -->
                 <div class="box well"></div>
           
       <!-- <h2>Bordered Table</h2> -->
@@ -76,15 +89,16 @@
                 <table class="table table-bordered reportTable" hidden>
                     <thead id='thead'>
                     </thead>
-                    <tbody id='tbody'>
+                    <tbody id='tbody' >
                     </tbody>
                 </table>
-            </div>
+            <!-- </div> -->
         </div>
-        <div class="modal-footer">
-            <button type="button" name="next"  style="width:110px;height:40px;"  class="btn-sm btn-outline-success " id='downloadReport' >Download</button>  
+        <div class="modal-footer"> 
+            <button class="float-right margin-left-0 margin-right-3 sc-bwzfXH Rpxft category-addlink" style="font-weight: 400;margin-left:0;margin-right:3px;" id='downloadReport'>Download</button> 
         </div>
     </div>
+  </div>
 </div>
 
       
@@ -102,7 +116,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">OLAP Version<sup style="color: red;">*</sup></p>
+        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">OLAP Version<sup style="color: red;"></sup></p>
         <div class="sc-caSCKo noAmc">
           <select class="sc-kjoXOD gAkajm" id='olap_version'>
                 <option value="{{buildsheet.9}}">{{buildsheet.9}}</option>
@@ -118,7 +132,7 @@
         <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">ACO ID<sup style="color: red;">*</sup></p>
         <div class="sc-caSCKo noAmc"><input class="sc-kjoXOD gAkajm" id="acoid" required="" type="text" value="{{buildsheet.3}}" style="height: 30px; margin-bottom: 0px;"></div>
 
-        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">Vendor Name<sup style="color: red;">*</sup></p>
+        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">Vendor Name<sup style="color: red;"></sup></p>
         <div class="sc-caSCKo noAmc">
           <select class="sc-kjoXOD gAkajm" id='vendor_name'>
                 <option value="{{buildsheet.7}}">{{buildsheet.7}}</option>
@@ -131,7 +145,7 @@
 
 
           <!--<input class="sc-kjoXOD gAkajm" id="vendor_name" required="" type="text" value="{{buildsheet.7}}" style="height: 30px; margin-bottom: 0px;">--></div>
-        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">Vendor Version<sup style="color: red;">*</sup></p>
+        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">Vendor Version<sup style="color: red;"></sup></p>
         <div class="sc-caSCKo noAmc"><input class="sc-kjoXOD gAkajm" id="vendor_version" required="" type="text" value="{{buildsheet.8}}" style="height: 30px; margin-bottom: 0px;"></div>
         <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">Source Name<sup style="color: red;">*</sup></p>
         <div class="sc-caSCKo noAmc">
@@ -170,6 +184,7 @@
         </div>
       </div>
       <div class="modal-footer">
+        <button type="button" class="run_insert btn btn-primary btn-sm"  ><div class="box well" hidden></div><span>Run Insert</span></button>
         <button type="button" class="btn btn-primary btn-sm" onclick="copy($('#query-textarea').val())">Copy Insert</button>
         <button type="button" class="btn btn-primary btn-sm" onclick="copy($('#query-textarea').val().replace(/^[^\(]+\([^\)]+\)\n*/g,''))">Copy Select</button>
         <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->

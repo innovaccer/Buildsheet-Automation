@@ -7,7 +7,7 @@ $(function() {
 	$('.getbuildsheet').on('click', function(e) {
 		
 		// getbuildsheet = this
-		getBuildsheet($(this).attr('aco_id'),$(this).attr('source_id'),$(this).attr('meta_id'));
+		getBuildsheet($(this).attr('aco_id'),$(this).attr('source_id'),$(this).attr('meta_id'),$(this).attr('aco_name'),$(this).attr('source_name'),$(this).attr('category'));
 
 
 	});
@@ -21,7 +21,7 @@ $(function() {
 	
 	$('#closeReport').off('click');
 	$('#closeReport').on('click', function(e) {
-		buildsheetPage();
+		backtoBuildsheetPage();
 		$('#report-modal').attr('hidden','');
 		$(".container").css("overflow", "");
 		$('.box').jmspinner(false);
@@ -40,7 +40,7 @@ $(function() {
 		// getbuildsheet = this
 		var acoid=$(this).attr('aco_id');
 		var sourceid=$(this).attr('source_id');
-		getBuildsheet(acoid,sourceid,'');
+		getBuildsheet(acoid,sourceid,'',$(this).attr('aco_name'),$(this).attr('source_name'),$(this).attr('category'));
 
 	});
 
@@ -50,7 +50,7 @@ $(function() {
 		// getbuildsheet = this
 		var acoid=$(this).attr('aco_id');
 		var sourceid=$(this).attr('source_id');
-		downloadReport(acoid,sourceid,'');
+		downloadReport(acoid,sourceid,'',$(this).attr('aco_name'),$(this).attr('source_name'),$(this).attr('category'));
 
 	});
 
@@ -67,6 +67,10 @@ function buildsheetPage() {
 	window.location.href= window.location.origin+'/buildsheets/'
 
 }
+function uniqueEntityPage() {
+	window.location.href= window.location.origin+'/uniqueEntity/'
+
+}
 function datacompletion() {
 	window.location.href= window.location.origin+'/dataCompletion/'
 }
@@ -75,6 +79,9 @@ function createPage() {
 }
 function auditPage() {
 	window.location.href= window.location.origin+'/auditListing/'
+}
+function patientValidation() {
+	window.location.href= window.location.origin+'/patientValidation/'
 }
 function setError(where, what) {
 	// var parent = $(where).parents('.form-group:eq(0)');
@@ -109,6 +116,7 @@ function getSQL(){
 				// $(this).parent().parent().parent().find('.row').find('.sql')
 
 				$('#query-textarea').text(res.query);
+				$('#query-textarea').attr('meta_id',$(getsql).attr('buildsheet_id'))
 				// $("html, body").animate({ scrollTop: 0 }, "slow");
 				
 			}
@@ -160,7 +168,7 @@ function base64toBlob(base64Data, contentType) {
     return new Blob(byteArrays, { type: contentType });
 }
 
-function getBuildsheet(aco_id,source_id,meta_id) {
+function getBuildsheet(aco_id,source_id,meta_id,aco_name,source_name,category) {
 // if ($("#where_table option:selected").val()!=''){
 	
 	
@@ -174,12 +182,12 @@ function getBuildsheet(aco_id,source_id,meta_id) {
 				// toastr.success(res.message);
 				// setTimeout(function() {window.location = 'buildsheet/';}, 1100);
 				
-				//console.log(res);
+				console.log(aco_name+"_"+source_name+"_"+category);
 				var blob = new Blob([res], { type: 'data:application/vnd.csv' });
 				var downloadUrl = URL.createObjectURL(blob);
 				var a = document.createElement("a");
 				a.href = downloadUrl;
-				a.download = aco_id+"_"+source_id+".csv";
+				a.download = aco_name+"_"+source_name+"_"+category+"_buildsheet.csv";
 				document.body.appendChild(a);
 				a.click();
 				
@@ -221,6 +229,9 @@ function getReport() {
 		aco_id= $(this).attr('aco_id');
 		source_id= $(this).attr('source_id');
 		meta_id= $(this).attr('meta_id');
+		aco_name= $(this).attr('aco_name');
+		source_name= $(this).attr('source_name');
+		category= $(this).attr('category');
 		var req = {}; 
 		$.ajax({
 			'type'	:	'post',
@@ -231,10 +242,9 @@ function getReport() {
 				//console.log(res.buildsheet);
 				$('.box').jmspinner(false);
 				$('.box').attr("hidden",'');
-				$(".container").css("overflow", "scroll");
 				$('.reportTable').removeAttr("hidden");
 
-				thead= '<tr>'
+				thead= '<tr class="table-primary">'
 				$.each(res.columns, function( index, value){
 					if(index<=14){
 						thead +='<th>'+value+'</th>';
@@ -249,10 +259,10 @@ function getReport() {
 						if(inindex<=14){
 							if(inindex=='13'||inindex=='14'){
 								if (invalue!='0'){
-									tbody +='<td style=" color: red;">'+invalue+'</td>';
+									tbody +='<td class="fail">'+invalue+'</td>';
 								}
 								else{
-									tbody +='<td style="color: #23e523;">'+invalue+'</td>';
+									tbody +='<td class="pass">'+invalue+'</td>';
 								}
 
 							}
@@ -266,10 +276,18 @@ function getReport() {
 				});
 
 				$('#tbody').html(tbody);
-
+				$('.fail').css('color', '#E74C3C');
+				$('.pass').css('color', '#0db70d');
+				fail_html = ''
+				$.each($('.fail').parent('tr'), function( i, v){
+					// console.log($(v).html());
+					fail_html += '<tr>'+$(v).html()+'</tr>';
+					$(v).remove();
+				});
+				$('#tbody').prepend(fail_html);
 				$('#downloadReport').off('click');
 				$('#downloadReport').on('click', function(e) {
-					downloadReport(aco_id,source_id,meta_id);
+					downloadReport(aco_id,source_id,meta_id,aco_name,source_name,category);
 				});
 
 			}
@@ -287,7 +305,7 @@ function getReport() {
 
 
 
-function downloadReport(aco_id,source_id,meta_id) {
+function downloadReport(aco_id,source_id,meta_id,aco_name,source_name,category) {
 	// if ($("#where_table option:selected").val()!=''){
 
 		
@@ -310,7 +328,7 @@ function downloadReport(aco_id,source_id,meta_id) {
 				var downloadUrl = URL.createObjectURL(blob);
 				var a = document.createElement("a");
 				a.href = downloadUrl;
-				a.download = aco_id+"_"+source_id+"_Report.csv";
+				a.download =aco_name+"_"+source_name+"_"+category+"_Report.csv";
 				document.body.appendChild(a);
 				a.click();
 			}
@@ -463,4 +481,26 @@ function info(msg) {
 	$('body').find('.alert').remove();
 	$('body').prepend('<div class="alert alert-dismissible alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Heads up! </strong>'+msg+'</div>');
 	$('body').find('.alert').fadeOut(8000);
+}
+
+
+function base64toBlob(base64Data, contentType) {
+    contentType = contentType || '';
+    var sliceSize = 1024;
+    var byteCharacters = atob(base64Data);
+    var bytesLength = byteCharacters.length;
+    var slicesCount = Math.ceil(bytesLength / sliceSize);
+    var byteArrays = new Array(slicesCount);
+
+    for (var sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+        var begin = sliceIndex * sliceSize;
+        var end = Math.min(begin + sliceSize, bytesLength);
+
+        var bytes = new Array(end - begin);
+        for (var offset = begin, i = 0; offset < end; ++i, ++offset) {
+            bytes[i] = byteCharacters[offset].charCodeAt(0);
+        }
+        byteArrays[sliceIndex] = new Uint8Array(bytes);
+    }
+    return new Blob(byteArrays, { type: contentType });
 }

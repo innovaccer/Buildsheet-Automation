@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app', # Add this line
+    # 'quality',
+	# 'patient_validation',
 ]
 
 MIDDLEWARE = [

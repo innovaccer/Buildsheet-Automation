@@ -1,7 +1,8 @@
 {% extends "buildsheet/base.html" %}
 {% block content %}
 {% load static %}
-
+<script src="{% static 'js/ui/buildsheet/templates.js' %}"></script>
+<script src="{% static 'js/ui/buildsheet/category-create.js' %}"></script>
 
 <div class='header' style="padding: 0;">
     
@@ -28,7 +29,7 @@
             <fieldset id='hard' buildsheet_id={{buildsheet.2}} >
                 <h2 class="fs-title">Meta Details</h2>
                 <h3 class="fs-subtitle">Please provide below inputs</h3>
-
+                <div class="box well" hidden></div>
                 <div class="card container">
                 	<input type="hidden" value="{{buildsheet.9}}"  id="olap_version" placeholder="Olap version" >
 			  		<div class="row">
@@ -127,6 +128,23 @@
 							<input type="text" name="pipeline_id" id='pipeline_id' placeholder="Pipeline ID" class="form-control form-control-sm form-control-custom">
 			    		</div>
 			  		</div>
+			  		<div class="row">
+			    		<div class="col-sm">
+			      			<label for="">Data Source <span class="text-danger"></span></label><br>
+							<select class="form-control form-control-sm form-control-custom" id='data-source'>
+								<option value="">Select Source</option>
+								{% for kind in data_kinds %}
+
+								<option value="{{kind.1}}" data-id="{{kind.0}}">{{kind.1}}</option>
+								{% endfor %}
+							</select>
+			    		</div>
+			    		<div class="col-sm  buildsheet-browse" id='source-version'></div>
+			    		<div class="col-sm" id='template-button'></div>
+			    		<div class="col-sm"></div>
+			    		<div class="col-sm"></div>
+
+			  		</div>
 				</div>
 				<input type="button" name="next" id='next' class="next action-button" value="Next"/>
             </fieldset>
@@ -197,7 +215,7 @@
 								<label for="">L2 DataType<span class="text-danger"></span></label><br>
 							</div>
 						</div>
-						<div id ='loadrows'></div>
+						<div id ='loadrows' category-name=''></div>
 						
 					</div>
 					<div class='wheres card container' style="padding:7px;margin-top: 20px;" >
@@ -293,6 +311,79 @@
     </div>
   </div>
 </div>
-<script src="{% static 'js/ui/buildsheet/category-create.js' %}"></script>
 
+<!--template Model-->
+<div class="modal  fade" id="template-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Map</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id='template-body'>
+
+      </div>
+      <div class="modal-footer">
+      	<button type="button" name="next"  class="btn btn-primary btn-sm" data-dismiss="modal" id='submit-template' >Submit</button>
+      	<button type="button" class="btn btn-sm btn-secondary transform-close" data-dismiss="modal" hidden>Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Browse Model-->
+<div class="modal  fade" id="browse-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id='browse-body'>
+      	<div class="row">
+	      	<div class="custom-file col-sm">
+			    <input type="file" id="customFile" placeholder="Choose File">
+			    <button type="button" name="next"  class="btn btn-primary btn-sm"  id='verify-buildsheet'>Verify</button>
+			    <!-- <label class="custom-file-label" for="customFile">Choose file</label> -->
+			</div>
+			<div class="col-sm">
+				
+			</div>
+      		
+      	</div>
+      	<div id='buildsheet-mapping' style="border-top: 1px solid #cecaca;"></div>
+
+      </div>
+      <div class="modal-footer">
+      	<button type="button" name="next"  class="btn btn-primary btn-sm" data-dismiss="modal" id='submit-template' >Submit</button>
+      	<button type="button" class="btn btn-sm btn-secondary browse-close" data-dismiss="modal" hidden>Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <script>
+function myFunction() {
+  setTimeout(function(){ 
+  	 $('.t1').tooltip({title: "Unique Key", html: true, placement: "right"}); 
+  }, 2000);
+};
+$(window).on("load", function () { 
+	myFunction();
+});
+
+</script> -->
+<script>
+function myFunction() {
+  setTimeout(function(){ 
+  	 // $('.t1').tooltip({title: "Unique Key", html: true, placement: "right"}); 
+  	 // console.log("tip loaded");
+  }, 5000);
+}
+myFunction();
+</script>
 {% endblock %}

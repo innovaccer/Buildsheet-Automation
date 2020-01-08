@@ -1,5 +1,13 @@
 $(function() {
 
+	$('.uniqueEntity-link').off('click');
+	$('.uniqueEntity-link').on('click', function(e) {
+		e.preventDefault();
+		window.location.href= window.location.origin+'/uniqueEntity/'+$(this).attr('buildsheet_id');
+	});
+
+	
+
 
 	$("#SchemabaseColumns").multiselect({
     columns  : 3,

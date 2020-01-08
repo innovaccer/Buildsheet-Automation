@@ -82,6 +82,22 @@ def runQuery(schema,query):
 		print query
 		rr = con.execute(query)
 		all_results =  rr.fetchall()
+
+		return all_results
+	except Exception as e:
+		print str(e)
+		raise
+
+def l1tol2(schema,query):
+	try:
+		con =connection()
+		if schema!='':
+			SetPath = "SET search_path TO %s" % schema
+			con.execute(SetPath)
+		# print query
+		con.execute(query)
+		con.commit()
+		all_results=''
 		return all_results
 	except Exception as e:
 		print str(e)

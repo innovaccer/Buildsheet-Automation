@@ -1,0 +1,81 @@
+{% extends "buildsheet/base.html" %}
+{% block content %}
+{% load static %}
+<style type="text/css">
+  .list-group-item {
+     margin-top: 0px; 
+}
+.bg-light {
+    background-color: #ffffff !important;
+}
+#sidebar-wrapper .list-group {
+    width: 12rem !important;
+    text-align: center;
+    font-size: 13px;
+}
+#sidebar-wrapper .sidebar-heading {
+    padding: 0.175rem 1.25rem !important;
+    font-size: 13px !important;
+    font-weight: 700;
+    text-align: center;
+}
+.list-color{
+    background-color: #f9f9f9 !important;
+    font-weight: 700;
+}
+</style>
+<script type="text/javascript">
+  $('.nav-item').removeClass('active');
+  $('#uniqueentity-link').parent().addClass('active');
+</script>
+<link href="{% static 'css/predefined/simple-sidebar.css' %}" rel="stylesheet" type="text/css">
+{% csrf_token %}
+<div class='header' style="padding: 4px 0px;">
+    <div class='row' style=" margin: 0;">
+      <div class='col-xl-6'>
+        <div class="padding-top-2" style="max-width: 35em;">
+            <p style="font-size: 12px; line-height: 1; margin: 0;">
+                <a class="text-gray" href="#" onClick='uniqueEntityPage()' id='buidsheet-backlink'>Unique Entity</a>
+                <span class="text-gray"> /</span>
+            </p>
+            <div class="sc-epnACN fpXcBW" title="{{buildsheet_name}}" style="text-transform: capitalize";>{{buildsheet.0}}</div>
+        </div>
+      </div>
+    </div>
+</div>
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Categories </div>
+      <div class="list-group list-group-flush">
+        <a href="#" class="list-group-item list-group-item-action  entity-category" meta-id="0">All</a>
+        {% for category in buildsheets %}
+          <a href="#" class="list-group-item list-group-item-action  entity-category" meta-id="{{category.1}}">{{category.0}}</a>
+                
+        {% endfor %}
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <a  href='#' id="menu-toggle"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+
+      </nav> -->
+
+      <div class="container-fluid">
+          <div class="box well"></div>
+          <div class='entity-table'></div>
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <script src="{% static 'js/ui/uniqueEntity/uniqueEntity.js' %}"></script> 
+  
+{% endblock %}

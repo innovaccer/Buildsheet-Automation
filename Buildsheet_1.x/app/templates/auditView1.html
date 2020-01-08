@@ -1,0 +1,69 @@
+{% extends "buildsheet/base.html" %}
+{% block content %}
+{% load static %}
+
+<script type="text/javascript">
+  $('#buildsheet-link').parent().removeClass('active');
+  $('#valuelever-link').parent().removeClass('active');
+  $('#auditreport-link').parent().addClass('active');
+</script>
+
+<style>
+
+#audit {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#audit td, #audit th {
+  border: 1px solid #ddd;
+  padding: 8px;
+
+}
+
+#audit tr:nth-child(even){background-color: #f2f2f2;}
+
+#audit tr:hover {background-color: #ddd;}
+
+#audit th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #e31c79;
+  color: white;
+}
+</style>
+<div class="container-fluid">
+    <!--<h3>#{{audit_name}}#</h3>-->
+    
+    <div style="margin-top: 30px;">
+      <table class="table table-bordered reportTable" id="audit" >
+        <thead id="thead">
+          <tr>
+            {% for column in columns %}
+            	
+              <th>{{column}}</th>            	
+            	
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody id='tbody'>
+          {% for row in rows %}
+              <tr>
+                {% for cell in row %}
+
+                
+                {% if forloop.counter0 > 0 %}	
+                <td>{{cell}}</td>
+              {% endif %} 
+
+                {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </div>
+
+ <script src="{% static 'js/ui/auditReport.js' %}"></script>
+{% endblock %}

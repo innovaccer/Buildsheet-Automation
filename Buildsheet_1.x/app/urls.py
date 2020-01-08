@@ -1,7 +1,7 @@
 # Buildsheet_Automation/app/urls.py
 
 from django.conf.urls import url
-from app import views,uniqueEntity
+from app import views,uniqueEntity,patientValidation
 from app.redshift import datacompletion
 
 urlpatterns = [
@@ -21,14 +21,21 @@ urlpatterns = [
     url(r'^dataCompletion/$', datacompletion.dataCompletion, name='dataCompletion'),
     url(r'^downloadDataReport/$', datacompletion.createExcelforClaims, name='dataCompletion'),
     url(r'^auditListing/$', views.getAuditReport, name='auditListing'),
-    url(r'^auditListing/(?P<meta_id>\d+)/view/$', views.viewAuditReport, name='auditListing'),
+    url(r'^auditListing/view/(?P<buildsheet_id>\d+)$', views.viewAuditReport, name='auditListing'),
     #url(r'^auditListing/(?P<meta_id>\d+)/viewo/$', views.viewontologyReport, name='auditListing'),
+    url(r'^viewsemantic/(?P<meta_id>\d+)/view/$', views.viewsemanticReport, name='create-list'),
+    url(r'^auditListing/(?P<meta_id>\d+)/view/$', views.viewCategoryAuditReport, name='auditListing'),
     url(r'^auditListing/(?P<meta_id>\d+)/views/$', views.viewsemanticReport, name='auditListing'),
     url(r'^auditListing/(?P<aco_id>\d+)/(?P<source_id>\d+)/view/$', views.allBuildsheetReport, name='auditListing'),
     url(r'^auditListing/(?P<aco_id>\d+)/(?P<source_id>\d+)/viewos/$', views.allonseReport, name='auditListing'),
     url(r'^uniqueEntity/$', uniqueEntity.getResult, name='uniqueEntity'),
+    url(r'^uniqueEntity/(?P<buildsheet_id>\d+)$', uniqueEntity.uniqueRedirect, name='uniqueEntity'),
     url(r'^loadData/$', views.loadData, name='loadData'),
+    url(r'^loadQuality/$', views.loadQuality, name='loadQuality'),
+    url(r'^templates/$', views.templatesUtils, name='templatesUtils'),
     url(r'^valueLevers/$', views.valueLevers, name='buildsheet'),
+    url(r'^patientValidation/$', patientValidation.runValidation, name='buildsheet'),
+    url(r'^testcase/(?P<meta_id>\d+)/$', views.testCaseReport, name='testCaseReport'),
 
     # url(r'^auditReport/$', views.auditReport, name='auditListing')
 ]

@@ -780,12 +780,60 @@ label {
     right: 0;
 }
 
-.column-button{
+.column-button {
     text-align: center !important;
-    width: 230px !important;
-    height: 35px !important;
-    font-size: 14px !important;
+    width: 160px !important;
+    height: 30px !important;
+    font-size: 12px !important;
 }
 .progress {
     height: 0.925rem;
+}
+#report-modal tbody {
+    display:block;
+    height:358px;
+    overflow:auto;
+}
+#report-modal thead, #report-modal tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;/* even columns width , fix width of table too*/
+}
+#report-modal thead {
+        width: calc( 100% - 0.5em );
+}
+#report-modal table {
+    font-size: 12px;
+    width:100%;
+    height: 330px;
+    word-break: break-word;
+}
+#report-modal .modal-body {
+    padding: 0px;
+    height: 450px;
+}
+#report-modal .modal {
+    padding-top: 90px;
+}
+#report-modal .modal-dialog {
+    max-width: 100%;
+    margin-top: 0;
+}
+#report-modal .modal-footer {
+border :0;
+}
+#report-modal .spinner{
+  text-align: center;
+   margin-top: 15%;
+}
+
+.red{
+    color: red;
+}
+
+.green{
+    color: green;
+}
+.bold{
+    font-weight: 600;
 }

@@ -1,12 +1,5 @@
-DROP PROCEDURE IF EXISTS `dwn_buildsheet`;
 DELIMITER $$
-CREATE PROCEDURE `dwn_buildsheet`
-(
-IN aco_id_var varchar(10),
-IN source_id_var  varchar(10),
-IN meta_id_var varchar(20),
-IN rep_typ varchar(20)
-)
+CREATE DEFINER=`root`@`%` PROCEDURE `dwn_buildsheet`(IN aco_id_var varchar(10),IN source_id_var  varchar(10),meta_id_var varchar(20),IN rep_typ varchar(20))
 BEGIN
 IF aco_id_var = '' THEN SET aco_id_var = '%'; END IF;
 IF source_id_var = '' THEN SET source_id_var = '%'; END IF;
@@ -36,11 +29,13 @@ SELECT
     l1_schema,
     source_table,
     source_column,
+    unique_flag,
     rule_type AS rule,
     rule AS transformation,
     l2_schema,
     destination_table,
     destination_column,
+    data_type,
     created,
     modified
 FROM

@@ -1,9 +1,76 @@
+{% extends "buildsheet/base.html" %}
+{% block content %}
 {% load static %}
-<!DOCTYPE html>
+
+<script type="text/javascript">
+  $('#buildsheet-link').parent().removeClass('active');
+  $('#valuelever-link').parent().removeClass('active');
+  $('#auditreport-link').parent().addClass('active');
+</script>
+<div class='header' style="padding: 4px 0px;">
+    <div class='row' style=" margin: 0;">
+      <div class='col-xl-6'>
+        <div class="padding-top-2" style="max-width: 35em;">
+            <p style="font-size: 12px; line-height: 1; margin: 0;">
+                <a class="text-gray" href="#" onClick='auditPage()' id='auditreport-backlink'>Audit-Report</a>
+                <span class="text-gray"> /</span>
+            </p>
+            <div class="sc-epnACN fpXcBW" title="{{buildsheet_name}}" style="text-transform: capitalize";>{{buildsheet.0}}</div>
+        </div>
+      </div>
+      <!--<div class='col-xl-6' style="padding: 7px;">
+        
+        <<button class="float-right sc-bwzfXH DjoYM" style="font-weight: 400; margin-left:0;margin-right:3px;" data-toggle="modal" data-target="#NewBuildsheetModal">Edit Buildsheet</button>
+        <button class="float-right margin-left-0 margin-right-3 sc-bwzfXH Rpxft category-addlink" style="font-weight: 400;margin-left:0;margin-right:3px;">Add Category</button>
+        
+      </div>-->
+    </div>
+</div>
+
+<div class="container-fluid"> 
+    <div class="category-list">
+        <table class="table table-hover" style="border-style: hidden;margin: 0;">
+          <thead style="text-align: -webkit-center;">
+            <tr>
+              <th scope="col">Category</th>
+              <th scope="col">Modified On</th>
+              <th scope="col">Options</th>
+            </tr>
+          </thead>
+          <tbody style="text-align: -webkit-center;">
+            {% for buildsheet in buildsheets %}
+                <tr class ="{% cycle '' '' as rowcolors  %}">
+                  <td scope="row">{{buildsheet.0}}</td>
+                  <td>{{buildsheet.4}}</td>
+                  <td>
+                    <div style="width: 30%;">
+                        
+                        
+                           <a class="form-inline btn audit-report " align="right" aco_id={{buildsheet.2}} source_id={{buildsheet.3}} meta_id={{buildsheet.1}}  data-toggle="popover" title="Download Report" data-trigger="click" data-placement="right" href="#" style="float:right;"><span class="fas fa-download"></span></a>
+                            
+                           <a class="form-inline btn audit-view " align="right" aco_id={{buildsheet.2}} source_id={{buildsheet.3}} meta_id={{buildsheet.1}} data-toggle="popover" title="View Report" data-trigger="click" data-placement="right" href="#" style="float:right;"><span class="fas fa-eye"></span></a>
+                          
+                            
+                    </div>
+                        
+                  </td>
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table> 
+    </div>     
+     
+
+ {% csrf_token %}
+
+
+
+</div>
+<!--<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <!--<link rel="stylesheet" href="buildsheet.css">-->
+    
     <title>Build sheet</title>
 	<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
 	<link href="{% static 'css/toastr.min.css' %}" rel="stylesheet" id="bootstrap-css">
@@ -22,11 +89,11 @@
 .spinner { position:relative; top:50%; left:44%; }
 </style>
 </head>
-<body>
-  <div>
+<body>-->
+  <!--<div>
     <h2 class="mt-5">  Buildsheet Generation System</h2>
     <nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 1px solid grey;">
-     <!--  <a class="navbar-brand" href="#">Navbar</a> -->
+     
        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -58,8 +125,8 @@
         </a>
       </div>
     </nav>
-  </div>
-  <div class="container-fluid"><br><br>
+  </div>-->
+  <!--<div class="container-fluid"><br><br>
     <h3>#{{audit_name}}#</h3>
     
     <div style="margin-top: 30px;">
@@ -82,6 +149,6 @@
         </tbody>
       </table>
   </div>
-</div>
-  </body>
-</html>
+</div>-->
+ <script src="{% static 'js/ui/auditReport.js' %}"></script>
+{% endblock %}

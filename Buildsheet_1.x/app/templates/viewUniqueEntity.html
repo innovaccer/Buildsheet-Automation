@@ -1,0 +1,15 @@
+{% extends "buildsheet/base.html" %}
+{% block content %}
+{% load static %}
+<script type="text/javascript">
+  $('#buildsheet-link').parent().removeClass('active');
+  $('#valuelever-link').parent().removeClass('active');
+  $('#uniqueentity-link').parent().addClass('active');
+</script>
+
+<br><br>
+
+<p align='center'><b>Page is under maintainance</b></p>
+
+<script src="{% static 'js/ui/unique.js' %}"></script>
+{% endblock %}

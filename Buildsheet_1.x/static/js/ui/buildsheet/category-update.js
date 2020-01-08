@@ -9,13 +9,11 @@ $(function() {
 	getSQL();
 	getReport();
 	deleteBuildsheet();
-	$('[data-toggle="tooltip"]').tooltip();
-
-
-
+	//$('[data-toggle="tooltip"]').tooltip();
+	console.log("This is being updated");
 
 });
-
+ 
 
 
 function validate(){
@@ -216,14 +214,14 @@ function sourceColumn(l2_column){
 		// $(l2_column).parent().parent().find('.l1_schema').html(schema_select).attr('disabled',true);
 		$(l2_column).parent().parent().find('.rule').val("hardcode").attr('disabled',true);
 	}
-	if ($(l2_column).val()=='source_file_name'){
-		meta_column = '<option value="source_file_name" selected>source_file_name</option>'
-		$(l2_column).parent().parent().find('.transform').val("'"+$('#source_file_name').val()+"'").attr('readonly','true');
-		$(l2_column).parent().parent().find('.alias_select').html(alias_select).attr('disabled',true).css("-webkit-appearance", "none").css('background','#e9e7e7');
-		$(l2_column).parent().parent().find('.l1_column').html(meta_column).attr('disabled',true).css("-webkit-appearance", "none").css('background','#e9e7e7');
-		// $(l2_column).parent().parent().find('.l1_schema').html(schema_select).attr('disabled',true);
-		$(l2_column).parent().parent().find('.rule').val("hardcode").attr('disabled',true);
-	}
+	// if ($(l2_column).val()=='source_file_name'){
+	// 	meta_column = '<option value="source_file_name" selected>source_file_name</option>'
+	// 	$(l2_column).parent().parent().find('.transform').val("'"+$('#source_file_name').val()+"'").attr('readonly','true');
+	// 	$(l2_column).parent().parent().find('.alias_select').html(alias_select).attr('disabled',true).css("-webkit-appearance", "none").css('background','#e9e7e7');
+	// 	$(l2_column).parent().parent().find('.l1_column').html(meta_column).attr('disabled',true).css("-webkit-appearance", "none").css('background','#e9e7e7');
+	// 	// $(l2_column).parent().parent().find('.l1_schema').html(schema_select).attr('disabled',true);
+	// 	$(l2_column).parent().parent().find('.rule').val("hardcode").attr('disabled',true);
+	// }
 	if ($(l2_column).val()=='workspace_id'){
 		meta_column = '<option value="workspace_id" selected>workspace_id</option>'
 		$(l2_column).parent().parent().find('.transform').val("'"+$('#workspace_id').val()+"'").attr('readonly','true');
@@ -314,7 +312,8 @@ function loadMapping() {
 				$('#from-joins').attr("hidden",'');
 				$('#build').removeAttr("hidden");
 			}
-			if ($("#l2_table option:selected").val()!='' && $('#loadrows').html()=='' && validateBeforeSubmit()){
+			if ($("#l2_table option:selected").val()!='' && ($('#loadrows').html()=='' || ($('#loadrows').html()!='' && $('#loadrows').attr('category-name')!=$('#l2_schema').val()+'_'+$('#l2_table').val())) && validateBeforeSubmit()){
+				$('#loadrows').attr('category-name',$('#l2_schema').val()+'_'+$('#l2_table').val());
 				var req = {}; 
 				$.ajax({
 					'type'	:	'post',
@@ -340,14 +339,14 @@ function loadMapping() {
 					$.each(res.mandatorycolumn, function( index, value ){
 						mand_column.push(value[0]);	
 					});
-					meta_columns = ['source_id','source_name','source_type','workflow_id','author','ingestion_datetime','vendor_version','vendor_name','aco_id','aco_name','source_file_name','workspace_id','indata_created_on','pipeline_id'];
-					$.each(res.columns, function( index, value ) {
+					meta_columns = ['source_id','source_name','source_type','workflow_id','author','ingestion_datetime','vendor_version','vendor_name','aco_id','aco_name','workspace_id','indata_created_on','pipeline_id'];
+					$.each(res.columns, function( index, value ) 	{
 						if(meta_columns.indexOf(value['column']) == -1){
 							if(mand_column.indexOf(value['column']) == -1){
-								$('#loadrows').append('<div class="row"><div class="col-sm"><select class="form-control-sm alias_select" > '+alias_select+'</select> </div><div class="col-sm"><select class="form-control-sm l1_column" > <option value="">Select Column</option></select> </div><div><a class="form-inline btn load-l1-data " data-toggle="popover"  data-trigger="focus" data-placement="right" href="#" style="padding: 0px;margin-top: 4px;"><i class="fas fa-eye"></i></a></div><div class="col-sm"><select class="form-control-sm rule">'+rule_select+' </select> </div><div class="col-sm"><textarea class="form-control-sm transform" id="transform-'+index+'" Placeholder="Add Transformation" data-trigger="click" data-toggle="modal" data-target="#transform-modal"></textarea></div><div class="" style="width: 25px;"><input type="checkbox" class="" id="unique-key" style="vertical-align: sub;"></div><div class="col-sm"><input type="text" class="form-control form-control-sm form-control-custom l2_column" disabled="true" id='+value['column']+'l2  value="'+value['column']+'" > </div><div><a class="form-inline btn load-l2-data" href="#" data-toggle="popover"  data-trigger="click" data-placement="right" style="padding: 0px;margin-top: 4px;"><i class="fas fa-eye"></i></a></div><div class="col-sm"><input type="text" disabled="true" class="form-control form-control-sm form-control-custom l2_columntype" value="'+value['type']+'" > </div></div>');
+								$('#loadrows').append('<div class="row"><div class="col-sm"><select class="form-control-sm alias_select" > '+alias_select+'</select> </div><div class="col-sm"><select class="form-control-sm l1_column" > <option value="">Select Column</option></select> </div><div><a class="form-inline btn load-l1-data " data-toggle="popover"  data-trigger="focus" data-placement="right" href="#" style="padding: 0px;margin-top: 4px;"><i class="fas fa-eye"></i></a></div><div class="col-sm"><select class="form-control-sm rule">'+rule_select+' </select> </div><div class="col-sm"><textarea class="form-control-sm transform" id="transform-'+index+'" Placeholder="Add Transformation" data-trigger="click" data-toggle="modal" data-target="#transform-modal"></textarea></div><div class="" style="width: 25px;"><input class="t1" type="checkbox" data-toggle="" id="unique-key" style="vertical-align: sub;"></div><div class="col-sm"><input type="text" class="form-control form-control-sm form-control-custom l2_column" disabled="true" id='+value['column']+'l2  value="'+value['column']+'" > </div><div><a class="form-inline btn load-l2-data" href="#" data-toggle="popover"  data-trigger="click" data-placement="right" style="padding: 0px;margin-top: 4px;"><i class="fas fa-eye"></i></a></div><div class="col-sm"><input type="text" disabled="true" class="form-control form-control-sm form-control-custom l2_columntype" value="'+value['type']+'" > </div></div>');
 							}
 							else{
-								$('#loadrows').append('<div class="row"><div class="col-sm"><select class="form-control-sm alias_select" > '+alias_select+'</select> </div><div class="col-sm"><select class="form-control-sm l1_column" > <option value="">Select Column</option></select> </div><div><a class="form-inline btn load-l1-data " data-toggle="popover"  data-trigger="focus" data-placement="right" href="#" style="padding: 0px;margin-top: 4px;"><i class="fas fa-eye"></i></a></div><div class="col-sm"><select class="form-control-sm rule">'+rule_select+' </select> </div><div class="col-sm"><textarea class="form-control-sm transform" id="transform-'+index+'" Placeholder="Add Transformation" data-trigger="click" data-toggle="modal" data-target="#transform-modal"></textarea></div><div class="" style="width: 25px;"><input type="checkbox" class="" id="unique-key" style="vertical-align: sub;"></div><div class="col-sm"><input type="text" class="form-control form-control-sm form-control-custom l2_column l2_mend_column" style="background: #bbc1c0 !important;" disabled="true" id='+value['column']+'l2  value="'+value['column']+'" > </div><div><a class="form-inline btn load-l2-data" href="#" data-toggle="popover"  data-trigger="click" data-placement="right" style="padding: 0px;margin-top: 4px;"><i class="fas fa-eye"></i></a></div><div class="col-sm"><input type="text" disabled="true" class="form-control form-control-sm form-control-custom l2_columntype" value="'+value['type']+'" > </div></div>');
+								$('#loadrows').append('<div class="row"><div class="col-sm"><select class="form-control-sm alias_select" > '+alias_select+'</select> </div><div class="col-sm"><select class="form-control-sm l1_column" > <option value="">Select Column</option></select> </div><div><a class="form-inline btn load-l1-data " data-toggle="popover"  data-trigger="focus" data-placement="right" href="#" style="padding: 0px;margin-top: 4px;"><i class="fas fa-eye"></i></a></div><div class="col-sm"><select class="form-control-sm rule">'+rule_select+' </select> </div><div class="col-sm"><textarea class="form-control-sm transform" id="transform-'+index+'" Placeholder="Add Transformation" data-trigger="click" data-toggle="modal" data-target="#transform-modal"></textarea></div><div class="" style="width: 25px;"><input class="t1" type="checkbox" data-toggle="" id="unique-key" style="vertical-align: sub;"></div><div class="col-sm"><input type="text" class="form-control form-control-sm form-control-custom l2_column l2_mend_column" style="background: #bbc1c0 !important;" disabled="true" id='+value['column']+'l2  value="'+value['column']+'" > </div><div><a class="form-inline btn load-l2-data" href="#" data-toggle="popover"  data-trigger="click" data-placement="right" style="padding: 0px;margin-top: 4px;"><i class="fas fa-eye"></i></a></div><div class="col-sm"><input type="text" disabled="true" class="form-control form-control-sm form-control-custom l2_columntype" value="'+value['type']+'" > </div></div>');
 							}
 						}
 						else{
@@ -382,7 +381,7 @@ function loadMapping() {
 						}
 						else{
 							$.each($('#loadrows').find('.alias_select option:selected[value="'+$(value).text().match(/\S+$/g)[0]+'"]'),function(i,v) {
-								$(v).prop('selected', false);
+								$(v).prop('selected', false);	
 								$(v).parent().parent().parent().find('.l1_column').val('');
 								$(v).parent().parent().parent().find('.rule').val('');
 								$(v).parent().parent().parent().find('.transform').val('');
@@ -434,29 +433,44 @@ function loadl1Data() {
 		// $(this).tooltip({ items: $(this), content: "Displaying on click"});
 
 		$(current).popover('dispose');
+		$("[data-toggle='popover']").popover('dispose');
 		
 		if($(this).parent().parent().find('.alias_select').val()!='' && $(this).parent().parent().find('.l1_column').val()!=''){
-			schema = $(this).parent().parent().find('.alias_select').find('option:selected').text().match(/[^\(]+(?=\.)/g);
-			table = $(this).parent().parent().find('.alias_select').find('option:selected').text().match(/(?<=\.)[^\)]+/g);
+			schema = $(this).parent().parent().find('.alias_select').find('option:selected').text().match(/\([^\.]+/g)[0].replace(/^\(/g, "");
+			table = $(this).parent().parent().find('.alias_select').find('option:selected').text().replace(/(^T\d+\([^\.]+\.|\)$)/g,"");
 			column = $(this).parent().parent().find('.l1_column').val();
 			$.ajax({
 				'type'	:	'post',
 				'url'	:	'/loadData/',
 				'async': false,
-				'data'	:	{'schema':schema[0],'table':table[0] , 'column' :column, action: 'getL1Data','csrfmiddlewaretoken':$( "input[name='csrfmiddlewaretoken']" ).val()}
+				'data'	:	{'schema':schema,'table':table , 'column' :column, action: 'getL1Data','csrfmiddlewaretoken':$( "input[name='csrfmiddlewaretoken']" ).val()}
 			}).done(function(res) {
+
+				$.fn.popover.Constructor.Default.whiteList.table = [];
+			    $.fn.popover.Constructor.Default.whiteList.tr = [];
+			    $.fn.popover.Constructor.Default.whiteList.td = [];
+			    $.fn.popover.Constructor.Default.whiteList.th = [];
+			    $.fn.popover.Constructor.Default.whiteList.div = [];
+			    $.fn.popover.Constructor.Default.whiteList.tbody = [];
+			    $.fn.popover.Constructor.Default.whiteList.thead = [];
 
 				if(res.status == '2'){
 					
-					row = ''
+					row = '';
+					row += '<table>';
 					$.each(res.result, function(i,v){
-						row += '<span>'+v+'</span><hr class="popover-hr">';
+						row += '<tr><td>'+v+'</td></tr>';
 					});
-					row = row.replace(/<[^<]+$/g,'')
+					row += '</table>';
+					// row = row.replace(/<[^<]+$/g,'')
 					$(current).popover({trigger: 'focus',content: row, html: true, title:'<span class="text-info"><strong>Distinct Values</strong></span> <a href="#" class="close-popover" data-dismiss="alert">x</a>' });
-					$(current).popover('show')
+					$(current).popover('show');
 					$(".popover").css("max-height", "350px");
 					$(".popover").css("overflow-y", "auto");
+					$("tr").css("border","1px solid black");
+					$("td").css("border","1px solid black");
+					$("table").css("width", "100%");
+					$("td").css("text-align", "center");
 					$('.close-popover').off('click');
 					$('.close-popover').on('click', function(e) {
 						e.preventDefault();
@@ -489,6 +503,7 @@ function loadl2Data() {
 		// $(this).tooltip({ items: $(this), content: "Displaying on click"});
 
 		$(current).popover('dispose');
+		$("[data-toggle='popover']").popover('dispose');
 		
 		if(($(this).parent().parent().find('.alias_select').val()!='' && $(this).parent().parent().find('.l1_column').val()!='') || $(this).parent().parent().find('.rule').val()!='' ){
 			schema= '';
@@ -513,17 +528,34 @@ function loadl2Data() {
 				'data'	:	{'meta_id':$('.load-build').attr('meta_id'), 'schema':schema,'table':table, 'column' :column,'rule': rule ,'transform': transform,'alias': alias, action: 'getL2Data','csrfmiddlewaretoken':$( "input[name='csrfmiddlewaretoken']" ).val()}
 			}).done(function(res) {
 
+				$.fn.popover.Constructor.Default.whiteList.table = [];
+			    $.fn.popover.Constructor.Default.whiteList.tr = [];
+			    $.fn.popover.Constructor.Default.whiteList.td = [];
+			    $.fn.popover.Constructor.Default.whiteList.th = [];
+			    $.fn.popover.Constructor.Default.whiteList.div = [];
+			    $.fn.popover.Constructor.Default.whiteList.tbody = [];
+			    $.fn.popover.Constructor.Default.whiteList.thead = [];
+
+
 				if(res.status == '2'){
-					
-					row = ''
+					row ='';
+					row += '<table>';	
+					// row = '<table class="table"><tbody>'
 					$.each(res.result, function(i,v){
-						row += '<span>'+v+'</span><hr class="popover-hr">';
+						// console.log(v)
+						// row += '<tr><td>'+v[0]+'</td><td>'+v[1]+'</td></tr>';
+						row += '<tr><td>'+v[0]+'</td><td>'+v[1]+'</td></tr>';
 					});
-					row = row.replace(/<[^<]+$/g,'');
+					row+='</table>';
+					// row = row.replace(/<[^<]+$/g,'');
 					$(current).popover({trigger: 'focus',content: row, html: true, title:'<span class="text-info"><strong>Distinct Values</strong></span> <a href="#" class="close-popover" data-dismiss="alert">x</a>' });
 					$(current).popover('show')
 					$(".popover").css("max-height", "350px");
 					$(".popover").css("overflow-y", "auto");
+					$("tr").css("border","1px solid black");
+					$("td").css("border","1px solid black");
+					$("table").css("width", "100%");
+					$("td").css("text-align", "center");
 					$('.close-popover').off('click');
 					$('.close-popover').on('click', function(e) {
 						e.preventDefault();
@@ -648,6 +680,7 @@ function createNext() {
 		if (validate()){
 
 			buildMetaDetails();
+			// changeAliasMapping();
 			// toSetDefaultOption();
 			// animatedCreateForm();
 
@@ -799,8 +832,9 @@ function buildData(){
 		row.alias = $(value).find('.alias_select').val();
 		row.default_l1schema = $('#dflt_l1_schema').val();
 		if ($(value).find('.alias_select').val()!=''){
-			row.source_schema = $(this).find('option:selected').text().match(/[^\(]+(?=\.)/g)[0];
-			row.source_table = $(this).find('option:selected').text().match(/(?<=\.)[^\)]+/g)[0];
+			row.source_schema = $(this).find('option:selected').text().match(/\([^\.]+/g)[0].replace(/^\(/g, "");
+			row.source_table = $(this).find('option:selected').text().replace(/(^T\d+\([^\.]+\.|\)$)/g,"");
+			
 			
 		}
 		else {
@@ -839,7 +873,15 @@ function buildData(){
 	meta_columns.pipeline_id= $('#pipeline_id').val();
 	meta_columns.default_l1schema = $('#dflt_l1_schema').val();
 	meta_rows.push(meta_columns);
-	submitBuildsheet(meta_rows,buildsheet_rows,$('#l2_table').val());
+	if(!validateMandatory()){
+		if(confirm("All Mandatory Columns are not Mapped,Do you wish to Submit?")){
+			submitBuildsheet(meta_rows,buildsheet_rows,$('#l2_table').val());
+		}
+		
+	}
+	else{
+		submitBuildsheet(meta_rows,buildsheet_rows,$('#l2_table').val());
+	}
 
 
 
@@ -909,6 +951,13 @@ function buildMetaDetails(){
 	meta_columns.default_l1schema = $('#dflt_l1_schema').val();
 	meta_columns.l2_schema= $('#l2_schema').val();
 	meta_columns.l2_table = $('#l2_table').val();
+	meta_columns.data_source = $('#data-source').val();
+	if ($('#data-source-version').val() != undefined){
+		meta_columns.data_source_version = $('#data-source-version').val()
+	}
+	else{
+		meta_columns.data_source_version='';
+	}
 	meta_rows.push(meta_columns);
 	
 	submitMetaDetails(meta_rows,$('#l2_table').val());
@@ -1140,6 +1189,8 @@ function loadBuild() {
 		
 	}).done(function(res) {
 		if(res.status=='2'){
+			$('#data-source').val(res.meta[20]).trigger('change');
+			$('#data-source-version').val(res.meta[21]);
 			$.each(res.from,function(index,value){
 				fillfrom(value);	
 				

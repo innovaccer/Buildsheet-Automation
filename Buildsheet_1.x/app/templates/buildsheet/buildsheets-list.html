@@ -30,14 +30,22 @@
                     <div class="sc-ibxdXY fbXAnU"><span class="text-gray" style="font-size: 13px;">EMR Name: {{buildsheet.7}}</span></div>
                   </div>
                 </div>
-                <div class="col-xl-4" style="padding: 16px;">
+                <div class="col-xl-2" style="padding: 16px;">
                   <div class="progress">
                     <!-- <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div> -->
                     <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: {{buildsheet.12}}%" aria-valuenow={{buildsheet.12}} aria-valuemin="0" aria-valuemax="100"><span style="color: black;">{{buildsheet.12}}%</span></div>
                     
                   </div>
                  </div>
-                <div class="sc-ibxdXY DdMcx col-xl-3" style="text-align: right;">
+                 <div class="sc-RefOD kxMCsa col-xl-2" title={{buildsheet.0}}>
+                  <a class="text-dark" style="font-size: 13px;">Quality : <span class="badge semantic-badge " aco-id="{{buildsheet.3}}" source-id='{{buildsheet.5}}' style="width: 100px; margin-left: 14px;">loading...</span></a>
+                   <div class="display-flex">
+                    <div class="sc-ibxdXY fbXAnU"><span class="text-gray" style="font-size: 13px;">Test Case: <span class="badge testcase-badge" aco-id="{{buildsheet.3}}" source-id='{{buildsheet.5}}' style="width: 100px;">loading...</span></span></div>
+                  </div>
+                </div>
+                 <!-- <div class='col-xl-1' style="text-align:center;padding:13px;"><span class="badge " aco-id="{{buildsheet.3}}" source-id='{{buildsheet.5}}' style="width: 80%;">loading...</span></div>
+                 <div class='col-xl-1' style="text-align:center;padding:13px;"><span class="badge " aco-id="{{buildsheet.3}}" source-id='{{buildsheet.5}}' style="width: 80%;">loading...</span></div> -->
+                <div class="sc-ibxdXY DdMcx col-xl-2" style="text-align: right;">
                   <span>
                     <span class="text-gray" style="display: inline-block; vertical-align: middle;">{{buildsheet.9}}</span>
                     <!-- <i class="material-icons" style="display: inline-block; vertical-align: middle; margin-left: 12px; font-size: 20px; cursor: pointer;">delete</i> -->
@@ -138,7 +146,7 @@
         <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">Vendor Name<sup style="color: red;">*</sup></p>
         <div class="sc-caSCKo noAmc">
         <select class="sc-kjoXOD gAkajm" id='vendor_name'>
-                <option value=" ">Select Vender</option>
+                <option value="">Select Vender</option>
                 {% for vender_name in vender_name %}
 
                 <option value="{{vender_name.0}}">{{vender_name.0}}</option>
@@ -148,7 +156,7 @@
               </select>
 
           <!--<input class="sc-kjoXOD gAkajm" id="vendor_name" required="" type="text" value="" style="height: 30px; margin-bottom: 0px;">--></div>
-        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">Vendor Version<sup style="color: red;">*</sup></p>
+        <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">Vendor Version<sup style="color: red;"></sup></p>
         <div class="sc-caSCKo noAmc"><input class="sc-kjoXOD gAkajm" id="vendor_version" required="" type="text" value="" style="height: 30px; margin-bottom: 0px;"></div>
         <p class="sc-cvbbAY gmVOoG" font-size="regular" style="margin: 10px 0px 4px;">Source Name<sup style="color: red;">*</sup></p>
         <div class="sc-caSCKo noAmc"><input class="sc-kjoXOD gAkajm" id="source_name" required="" type="text" value="" style="height: 30px; margin-bottom: 0px;"></div>

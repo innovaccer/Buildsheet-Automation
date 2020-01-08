@@ -1,21 +1,19 @@
 {% extends "buildsheet/base.html" %}
 {% block content %}
 {% load static %}
-
-
+<script src="{% static 'js/ui/buildsheet/category-update.js' %}"></script>
 <div class='header' style="padding: 0;">
     
 	<div class="sc-iuJeZd hLYofL">
 		<div class="padding-top-3" style="font-size: 12px; line-height: 1;">
 			<a class="text-gray" href="#" onClick='buildsheetPage()'>Buildsheets / </a>
-			<a class="text-gray" buildsheet_id={{buildsheet.2}} href="#" onClick='backtoBuildsheetPage()'>{{buildsheet.0}} /</a>
+			<a class="text-gray" buildsheet_id="{{buildsheet.2}}" href="#" onClick='backtoBuildsheetPage()'>{{buildsheet.0}} /</a>
 		</div>
 		<div class="sc-esOvli ggnHaG">{{buildsheet.9}}</div>
 	</div>
 </div>
 {% csrf_token %}
 <!-- MultiStep Form -->
-
 <div class="row" style=" margin: 0;">
     <div class="col-md-12 col-md-offset-3">
         <form id="msform">
@@ -166,6 +164,23 @@
 							{% endifnotequal %}
 			    		</div>
 			  		</div>
+			  		<div class="row">
+			    		<div class="col-sm">
+			      			<label for="">Data Source <span class="text-danger"S</span></label><br>
+							<select class="form-control form-control-sm form-control-custom" id='data-source'>
+								<option value="">Select Source</option>
+								{% for kind in data_kinds %}
+
+								<option value="{{kind.1}}" data-id="{{kind.0}}">{{kind.1}}</option>
+								{% endfor %}
+							</select>
+			    		</div>
+			    		<div class="col-sm" id='source-version'></div>
+			    		<div class="col-sm"></div>
+			    		<div class="col-sm"></div>
+			    		<div class="col-sm"></div>
+
+			  		</div>
 				</div>
 				<input type="button" name="next" id='next' class="next action-button" value="Next"/>
             </fieldset>
@@ -209,7 +224,7 @@
 					</div>
 		 		</div>
 		 		<input type="button" name="previous" id='first-previous' class="previous action-button-previous" value="Previous"/>
-                <input type="button" name="next" id='second-next' meta_id="{{buildsheet.18}}" class="next action-button load-build" value="Next"/>
+                <input type="button" name="next" id='second-next' meta_id={{buildsheet.18}} class="next action-button load-build" value="Next"/>
             </fieldset>
             <fieldset id='build' hidden>
                 <h2 class="fs-title">Mapping</h2>
@@ -239,7 +254,7 @@
 								<label for="">L2 DataType<span class="text-danger"></span></label><br>
 							</div>
 						</div>
-						<div id ='loadrows'></div>
+						<div id ='loadrows' category-name=''></div>
 						
 					</div>
 					<div class='wheres card container' style="padding:7px;margin-top: 20px;" >
@@ -334,6 +349,16 @@
     </div>
   </div>
 </div>
-<script src="{% static 'js/ui/buildsheet/category-update.js' %}"></script>
+
+<script>
+function myFunction() {
+  setTimeout(function(){ 
+  	 $('.t1').tooltip({title: "Unique Key", html: true, placement: "right"}); 
+  }, 5000);
+}
+myFunction();
+</script>
+
+<!-- <script src="{% static 'js/ui/buildsheet/templates.js' %}"></script> -->
 
 {% endblock %}
